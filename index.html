@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milatro - by miko</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="liquid-bg"></div>
+
+    <div class="game-container">
+        <div class="left-panel">
+            <div class="blind-panel">
+                <div class="blind-title">Ciega pequeña</div>
+                <div class="blind-info">
+                    <div class="blind-target">Anota al menos</div>
+                    <div class="blind-score" id="target">300</div>
+                    <div class="blind-reward">Recompensa: $$$</div>
+                </div>
+                <div class="score-display">
+                    <div class="score-label" id="score-label">Puntuación</div>
+                    <div class="score-value" id="score">0</div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box points-background">
+                        <div class="stat-label points">puntos</div>
+                        <div class="stat-value" id="hand-score-points">0</div>
+                    </div>
+                    <div class="stat-box mult-background">
+                        <div class="stat-label mult">mult</div>
+                        <div class="stat-value" id="hand-score-mult">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-buttons">
+                <button class="btn-small btn-info" onclick="showCombinations()">Ver Combinaciones</button>
+                <button class="btn-small btn-menu" onclick="restartGame()">Reiniciar Partida</button>
+                <button class="btn-small btn-menu" onclick="exitGame()">Salir</button>
+                <button class="btn-small btn-menu" onclick="goToMenu()">Menú</button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">Manos</div>
+                    <div class="stat-value" id="hands">4</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Descartes</div>
+                    <div class="stat-value" id="discards">3</div>
+                </div>
+                <div class="stat-box money-box">
+                    <div class="stat-label">Monedas</div>
+                    <div class="stat-value" id="money">$4</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Ronda</div>
+                    <div class="stat-value" id="round">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="play-area">
+            <div class="selected-area" id="selected-area">
+                <div id="empty-message">Selecciona cartas para jugar</div>
+            </div>
+
+            <div class="hand-info">
+                <div class="hand-name" id="hand-name">Selecciona cartas</div>
+                <div class="hand-score" id="hand-score">Puntos: 0 | Mult: 0</div>
+            </div>
+
+            <div class="hand" id="hand"></div>
+
+            <div class="controls">
+                <button class="btn" id="play-btn" disabled>Jugar mano</button>
+
+                <!-- Nuevos botones de organización -->
+                <div class="sort-buttons">
+                    <button class="btn-sort" id="sort-suit-btn" title="Organizar por palo">tipos</button>
+                    <button class="btn-sort" id="sort-pairs-btn" title="Organizar por pares">pares</button>
+                </div>
+
+                <button class="btn" id="discard-btn" disabled>Descartar</button>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="deck-container" id="deck-container">
+                <div class="deck-card"></div>
+                <div class="deck-card"></div>
+                <div class="deck-card"></div>
+            </div>
+            <div class="deck-info">
+                <div id="deck-count">52/52</div>
+            </div>
+        </div>
+        <div class="boot-menu">
+            <div class="boot-menu-content">
+                <h1>Milatro</h1>
+                <br>
+                <br>
+                <br>
+                <button class="btn btn-play enabled" onclick="startGame()">Jugar</button>
+                <button class="btn btn-info" onclick="showCombinations()">Ver Recorts</button>
+                <p>Desarrollado por miko</p>
+            </div>
+            <div class="boot-menu-start-game">
+                <h1>iniciar un juego nuevo</h1>
+                <br>
+                <br>
+                <br>
+                <input type="text" id="player-name" placeholder="Nombre del jugador" maxlength="20">
+                <input type="text" id="ip-player" placeholder="Nombre del jugador" maxlength="20">
+                <h2>tu ip es</h2>
+                <br>
+                <button class="btn btn-play enabled" onclick="startGame()">Iniciar</button>
+                <button class="btn btn-info" onclick="showCombinations()">Ver Recorts</button>
+                <p>Desarrollado por miko</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="combinations-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeCombinations()">&times;</span>
+            <h2>Combinaciones de Poker</h2>
+            <div class="hand-combo">
+                <span>Escalera Real</span>
+                <span>100 + 8x</span>
+            </div>
+            <div class="hand-combo">
+                <span>Escalera de Color</span>
+                <span>100 + 8x</span>
+            </div>
+            <div class="hand-combo">
+                <span>Póker</span>
+                <span>60 + 7x</span>
+            </div>
+            <div class="hand-combo">
+                <span>Full House</span>
+                <span>40 + 4x</span>
+            </div>
+            <div class="hand-combo">
+                <span>Color</span>
+                <span>35 + 4x</span>
+            </div>
+            <div class="hand-combo">
+                <span>Escalera</span>
+                <span>30 + 4x</span>
+            </div>
+            <div class="hand-combo">
+                <span>Trío</span>
+                <span>30 + 3x</span>
+            </div>
+            <div class="hand-combo">
+                <span>Doble Pareja</span>
+                <span>20 + 2x</span>
+            </div>
+            <div class="hand-combo">
+                <span>Pareja</span>
+                <span>10 + 2x</span>
+            </div>
+            <div class="hand-combo">
+                <span>Carta Alta</span>
+                <span>5 + 1x</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-over" id="game-over">
+        <div class="game-over-content">
+            <h2 id="game-result">¡Juego Terminado!</h2>
+            <div class="final-score">Puntuación Final: <span id="final-score">0</span></div>
+            <button class="btn btn-play enabled" onclick="restartGame()">Jugar de Nuevo</button>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script src="boot_menu.js"></script>
+</body>
+
+</html>
