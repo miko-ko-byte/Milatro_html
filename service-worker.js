@@ -1,13 +1,13 @@
 const cacheName = 'milatro-v1';
 const assets = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/boot_game.js',
-  '/boot_menu.js',
-  '/music_manager.js',
-  '/images/logo.png',
-  '/offline.html'
+  '/Milatro_html/',
+  '/Milatro_html/index.html',
+  '/Milatro_html/styles.css',
+  '/Milatro_html/boot_game.js',
+  '/Milatro_html/boot_menu.js',
+  '/Milatro_html/music_manager.js',
+  '/Milatro_html/images/logo.png',
+  '/Milatro_html/offline.html'
 ];
 
 self.addEventListener('install', installEvent => {

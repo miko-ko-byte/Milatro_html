@@ -1,72 +1,16 @@
-
-miko@DESKTOP-9H3AKGE MINGW64 ~
-$ git remote add origin https://github.com/miko-ko-byte/Milatro_html.git
-fatal: not a git repository (or any of the parent directories): .git
-
-miko@DESKTOP-9H3AKGE MINGW64 ~
-$ git remote add origin https://github.com/miko-ko-byte/Milatro_html.git~
-fatal: not a git repository (or any of the parent directories): .git
-
-miko@DESKTOP-9H3AKGE MINGW64 ~
-$ git remote add origin https://github.com/miko-ko-byte/Milatro_html.git
-fatal: not a git repository (or any of the parent directories): .git
-
-miko@DESKTOP-9H3AKGE MINGW64 ~
-$ dir
-3D\ Objects
-AppData
-Configuración\ local
-Contacts
-Cookies
-Datos\ de\ programa
-Desktop
-Documents
-Downloads
-Entorno\ de\ red
-Favorites
-Impresoras
-IntelGraphicsProfiles
-Latest\ ADB\ Fastboot\ Tool
-Links
-Menú\ Inicio
-Mis\ documentos
-Music
-NTUSER.DAT
-NTUSER.DAT{53b39e87-18c4-11ea-a811-000d3aa4692b}.TxR.0.regtrans-ms
-NTUSER.DAT{53b39e87-18c4-11ea-a811-000d3aa4692b}.TxR.1.regtrans-ms
-NTUSER.DAT{53b39e87-18c4-11ea-a811-000d3aa4692b}.TxR.2.regtrans-ms
-NTUSER.DAT{53b39e87-18c4-11ea-a811-000d3aa4692b}.TxR.blf
-NTUSER.DAT{53b39e88-18c4-11ea-a811-000d3aa4692b}.TM.blf
-NTUSER.DAT{53b39e88-18c4-11ea-a811-000d3aa4692b}.TMContainer00000000000000000001.regtrans-ms
-NTUSER.DAT{53b39e88-18c4-11ea-a811-000d3aa4692b}.TMContainer00000000000000000002.regtrans-ms
-OneDrive
-Pictures
-Plantillas
-Reciente
-Saved\ Games
-Searches
-SendTo
-Videos
-ntuser.dat.LOG1
-ntuser.dat.LOG2
-ntuser.ini
-
-miko@DESKTOP-9H3AKGE MINGW64 ~
-$ cd Documents
-
-miko@DESKTOP-9H3AKGE MINGW64 ~/Documents
-$ cd Github
-
-miko@DESKTOP-9H3AKGE MINGW64 ~/Documents/Github
-$ cd milatro_html
-
-miko@DESKTOP-9H3AKGE MINGW64 ~/Documents/Github/milatro_html (main)
-$ git remote add origin https://github.com/miko-ko-byte/Milatro_html.git
-error: remote origin already exists.
-
-miko@DESKTOP-9H3AKGE MINGW64 ~/Documents/Github/milatro_html (main)
-$ git remote -v
-origin  https://github.com/miko-ko-byte/Milatro_html.git (fetch)
-origin  https://github.com/miko-ko-byte/Milatro_html.git (push)
-
-miko@DESKTOP-9H3AKGE MINGW64 ~/Documents/Github/milatro_html (main)
+[boot_menu.js] boot_menu.js loaded
+boot_menu.js:2 [boot_menu.js] Starting boot menu...
+boot_menu.js:915 [boot_menu.js] Initial UI setup complete. Only main boot menu visible.
+boot_menu.js:924 [boot_menu.js] Intro logo displayed. Waiting for user to enter main menu.
+share.js:8 Share API supported.
+push_notifications.js:10 Notification permission granted.
+boot_menu.js:318 [boot_menu.js] Setting background: main
+boot_menu.js:1089 [boot_menu.js] Core game event listeners attached.
+Milatro_html/:296  GET https://miko-ko-byte.github.io/Milatro_html/images/jokers/blue_deck.png 404 (Not Found)Understand this error
+Milatro_html/:314 ServiceWorker registration successful with scope:  https://miko-ko-byte.github.io/Milatro_html/
+service-worker.js:1 Uncaught (in promise) TypeError: Failed to execute 'addAll' on 'Cache': Request failed
+Promise.then
+(anonymous) @ service-worker.js:16
+Promise.then
+(anonymous) @ service-worker.js:15Understand this error
+boot_menu.js:929 [boot_menu.js] All resources finished loading (window 'load' event).
