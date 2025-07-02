@@ -204,8 +204,7 @@ async function playHand() {
         const selectedIndexes = new Set(gameState.selectedCards);
         const selectedElements = allCardElements.filter(el => selectedIndexes.has(parseInt(el.dataset.index)));
         
-        selectedElements.forEach(el => el.classList.add('card-played-up'));
-        await sleep(600 * gameState.animationSpeed);
+        await animateCardScores(selectedElements, selectedHandCards, gameState.animationSpeed);
 
         showNotification(`${handResult.name}! (+${totalScore} Puntos)`, 1500 * gameState.animationSpeed);
         await sleep(1500 * gameState.animationSpeed);
@@ -375,10 +374,21 @@ function analyzePokerHand(cards) {
     if (counts[0] === 2) return { name: 'Pareja', points: 10, mult: 2 };
 
     // CORRECCIÓN: Se usa rankValues para el cálculo de Carta Alta.
-    const highCardPoints = cards.reduce((sum, card) => {
+    const cardValueSum = cards.reduce((sum, card) => {
         return sum + rankValues[card.rank];
     }, 0);
-    return { name: 'Carta Alta', points: highCardPoints, mult: 1 };
+
+    // Add cardValueSum to points for all hand types
+    if (isFlush && isStraight) return { name: 'Escalera de Color', points: 100 + cardValueSum, mult: 8 };
+    if (counts[0] === 4) return { name: 'Póker', points: 60 + cardValueSum, mult: 7 };
+    if (counts[0] === 3 && counts[1] === 2) return { name: 'Full House', points: 40 + cardValueSum, mult: 4 };
+    if (isFlush) return { name: 'Color', points: 35 + cardValueSum, mult: 4 };
+    if (isStraight) return { name: 'Escalera', points: 30 + cardValueSum, mult: 4 };
+    if (counts[0] === 3) return { name: 'Trío', points: 30 + cardValueSum, mult: 3 };
+    if (counts[0] === 2 && counts[1] === 2) return { name: 'Doble Pareja', points: 20 + cardValueSum, mult: 2 };
+    if (counts[0] === 2) return { name: 'Pareja', points: 10 + cardValueSum, mult: 2 };
+
+    return { name: 'Carta Alta', points: cardValueSum, mult: 1 };
 }
 
 function sleep(ms) {
@@ -405,4 +415,46 @@ function gameOver(won) {
             restartGame();
         }, 2000);
     }
+}
+
+
+async function animateCardScores(cardElements, cardsData, animationSpeed) {
+    const scoreAnimations = [];
+    for (let i = 0; i < cardElements.length; i++) {
+        const cardEl = cardElements[i];
+        const cardData = cardsData[i];
+        const cardRect = cardEl.getBoundingClientRect();
+        const cardValue = rankValues[cardData.rank];
+
+        const scoreEl = document.createElement('div');
+        scoreEl.textContent = `+${cardValue}`;
+        scoreEl.className = 'card-score-animation';
+        scoreEl.style.position = 'absolute';
+        scoreEl.style.left = `${cardRect.left + cardRect.width / 2}px`;
+        scoreEl.style.top = `${cardRect.top + cardRect.height / 2}px`;
+        scoreEl.style.opacity = '0';
+        scoreEl.style.transform = 'translate(-50%, -50%) rotate(0deg) scale(0)';
+        scoreEl.style.transition = `all ${0.6 * animationSpeed}s ease-out`;
+        document.body.appendChild(scoreEl);
+        scoreAnimations.push(scoreEl);
+
+        // Animate in
+        requestAnimationFrame(() => {
+            scoreEl.style.opacity = '1';
+            scoreEl.style.transform = 'translate(-50%, -150%) rotate(360deg) scale(1)';
+        });
+    }
+
+    await sleep(600 * animationSpeed); // Wait for the animation to go up
+
+    // Animate out
+    scoreAnimations.forEach(scoreEl => {
+        scoreEl.style.transition = `all ${0.4 * animationSpeed}s ease-in`;
+        scoreEl.style.opacity = '0';
+        scoreEl.style.transform = 'translate(-50%, -50%) rotate(720deg) scale(0)';
+    });
+
+    await sleep(400 * animationSpeed); // Wait for the animation to go back and fade out
+
+    scoreAnimations.forEach(scoreEl => scoreEl.remove());
 }

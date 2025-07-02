@@ -25,7 +25,8 @@ let gameState = {
     ownedBlackCards: [], // Array of black card IDs owned
     timesBooted: 0,
     startTime: null,
-    completionPercentage: 0
+    completionPercentage: 0,
+    recovery: false
 };
 // Available jokers for purchase in the shop
 // Archivo: boot_menu.js
@@ -509,6 +510,7 @@ function updateUI() {
     localStorage.setItem("seenSubEffects", JSON.stringify(gameState.seenSubEffects))
     localStorage.setItem("timesBooted", gameState.timesBooted);
     localStorage.setItem("startTime", gameState.startTime.getTime());
+    localStorage.setItem("recovery", JSON.stringify(gameState));
 
     document.getElementById('target').textContent = gameState.targetScore;
     document.getElementById('hands').textContent = gameState.handsLeft;
@@ -667,6 +669,7 @@ function nextRoundMenu() {
 
     document.querySelector('.shop-menu').style.display = 'flex';
     gameState.round++;
+    gameState.recovery = true;
     let shuffledJokers = availableJokers.sort(() => Math.random() - 0.5);
     gameState.shopJokers = assignSubEffectsToShopJokers(shuffledJokers.slice(0, 2));
     const hasBlackCard = gameState.shopJokers.some(joker => joker.rarity === 'black card');
@@ -847,8 +850,10 @@ function restartGame(data = null) {
             ownedBlackCards: [], 
             timesBooted: 0,
             startTime: new Date(),
-            completionPercentage: 0
+            completionPercentage: 0,
+            recovery: false
         };
+        localStorage.removeItem('recovery');
         console.log("[boot_menu.js] --- Restarting Game ---");
     } else {
         console.log("[boot_menu.js] --- Starting new blind with provided data ---");
@@ -887,6 +892,14 @@ document.querySelector(".shop-menu").style.display = "none";
 document.getElementById("intro-logo").style.display = "flex";
 console.log("[boot_menu.js] Intro logo displayed. Waiting for user to enter main menu.");
 
+// Enviar en logs cuando todo esta cargado en dom!
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        console.log("[boot_menu.js] All resources finished loading (window 'load' event).");
+    document.getElementsByClassName("loading-joker")[0].style.display = "none"
+    }, 3000);
+});
+
 // Avanzar al menú principal tras click en logo
 function enterMainMenu() {
     const introLogo = document.getElementById("intro-logo");
@@ -894,11 +907,19 @@ function enterMainMenu() {
 
     // Fade out intro-logo
     introLogo.classList.add("fade-out");
+    const menu = document.querySelector('.boot-menu');
+    setTimeout(() => {
+        const menu = document.querySelector('.boot-menu');
+        if (!menu.classList.contains('show')) {
+            menu.classList.toggle('show');
+            console.log("main menu!");
+        }
+    }, 3000);
 
     setTimeout(() => {
         introLogo.style.display = "none";
         bootMenu.style.display = "block";
-        bootMenu.classList.add("fade-in", "show"); // Add fade-in and show classes
+        
         console.log("[boot_menu.js] Entered main menu from intro logo.");
         startMusicSystem();
         loadJokerScripts();
@@ -930,6 +951,26 @@ function enterMainMenu() {
             gameState.timesBooted = timesBooted ? parseInt(timesBooted, 10) : 0;
             gameState.startTime = (startTime && !isNaN(parseInt(startTime, 10))) ? new Date(parseInt(startTime, 10)) : new Date();
 
+            // Check for recovery data
+            let recoveryData = localStorage.getItem("recovery");
+            if (recoveryData) {
+                try {
+                    let parsedRecovery = JSON.parse(recoveryData);
+                    if (parsedRecovery && typeof parsedRecovery === 'object' && parsedRecovery.score !== undefined && parsedRecovery.score !== 0) {
+                        gameState.recovery = true;
+                        console.log(`[boot_menu.js] Valid recovery found! Score: ${parsedRecovery.score}, Round: ${parsedRecovery.round}.`);
+                    } else {
+                        gameState.recovery = false; // Invalid or score is 0
+                        console.log("[boot_menu.js] Recovery data found but is invalid or score is 0. Not enabling recovery.");
+                    }
+                } catch (e) {
+                    gameState.recovery = false; // Parsing error
+                    console.error("[boot_menu.js] Error parsing recovery data from localStorage:", e);
+                }
+            } else {
+                gameState.recovery = false; // No recovery data found
+            }
+
             // Check for null/undefined after parsing
             if (
                 gameState.jokerCollection == null ||
@@ -950,9 +991,67 @@ function enterMainMenu() {
             gameState.seenSubEffects = [];
             gameState.timesBooted = 0;
             gameState.startTime = new Date();
+            gameState.recovery = false; // Ensure recovery is false on error
             console.log("[boot_menu.js] ERROR: jokers encontrados no cargados!", error);
         }
+        const menu = document.querySelector('.boot-menu');
+            menu.classList.toggle('show');
+
+        // Check for recovery state and redirect
+        if (gameState.recovery) {
+            document.querySelector('.boot-menu').style.display = 'none';
+            document.getElementById('recovery-menu').style.display = 'flex';
+            console.log("[boot_menu.js] Redirecting to recovery menu.");
+            // Initialize recovery menu content
+            const recoveryData = localStorage.getItem('recovery');
+            const recoveryInfoElement = document.getElementById('recovery-info');
+            const loadRecoveryBtn = document.getElementById('load-recovery-btn');
+
+            if (recoveryData) {
+                try {
+                    const parsedData = JSON.parse(recoveryData);
+                    if (parsedData && typeof parsedData === 'object' && parsedData.score !== undefined) {
+                        recoveryInfoElement.textContent = 'Recovery data found. Score: ' + parsedData.score + ', Round: ' + parsedData.round;
+                        loadRecoveryBtn.disabled = false;
+                    } else {
+                        recoveryInfoElement.textContent = 'Corrupted recovery data found. Starting new game is recommended.';
+                    }
+                } catch (e) {
+                    recoveryInfoElement.textContent = 'Error parsing recovery data. Starting new game is recommended.';
+                    console.error('Error parsing recovery data:', e);
+                }
+            } else {
+                recoveryInfoElement.textContent = 'No recovery data found. Please start a new game.';
+            }
+        } else {
+            document.querySelector('.boot-menu-main').style.display = 'block';
+        }
     }, 1000); // Match CSS transition duration
+}
+
+function loadRecoveryGame() {
+    const recoveryData = localStorage.getItem('recovery');
+    if (recoveryData) {
+        try {
+            const parsedData = JSON.parse(recoveryData);
+            Object.assign(gameState, parsedData);
+            console.log('Game state loaded from recovery:', gameState);
+            document.getElementById('recovery-menu').style.display = 'none';
+            // Assuming we go to the shop after loading a game
+            nextRoundMenu();
+        } catch (e) {
+            console.error('Failed to load recovery game:', e);
+            alert('Failed to load recovery game. Starting a new game.');
+            startNewGame();
+        }
+    }
+}
+
+function startNewGame() {
+    localStorage.removeItem('recovery'); // Clear any existing recovery data
+    document.getElementById('recovery-menu').style.display = 'none';
+    // Reset gameState to default values for a new game
+    restartGame(); // Call restartGame to re-initialize gameState and show main menu
 }
 
 document.addEventListener('DOMContentLoaded', () => {

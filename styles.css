@@ -791,30 +791,66 @@ body {
 }
 
 .intro-logo p {
-    font-size: 1em;
+    font-size: 0.4em;
     margin-top: 20px;
     opacity: 0.8;
 }
 
 .loading-joker {
-    width: 100px;
+    width: 60px;
     height: auto;
-    margin-top: 20px;
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    opacity: 0.6;
+    margin-top: 0;
     animation: blink 1s infinite alternate;
+    z-index: 1200;
 }
 
 @keyframes blink {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .boot-menu.fade-in {
+    opacity: 1;
+    transition: opacity 4s ease-in;
+}
+
+.boot-menu.fade-in:not(.show) {
     opacity: 0;
-    transition: opacity 1s ease-in;
 }
 
 .boot-menu.fade-in.show {
     opacity: 1;
+}
+
+.boot-menu {
+    opacity: 0;
+    transition: opacity 4s ease-in;
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.boot-menu.show {
+    opacity: 1;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .blind-selection-menu {
@@ -823,7 +859,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.349);
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -858,11 +894,14 @@ body {
 
 /* LOGO animado */
 .boot-logo {
-    width: 90%;
+    width: 70%;
     max-width: 950px;
+    max-height: 70vh;
     animation: sway 17s ease-in-out infinite;
     margin: 0 auto 40px;
     display: block;
+    height: auto;
+    object-fit: contain;
 }
 
 /* Comentario: gira de -5deg a +5deg */
@@ -1897,7 +1936,8 @@ body {
     justify-content: center;
     align-items: center;
     background: rgba(0, 0, 0, 0);
-    z-index: 1000; /* Ensure it's on top of other content */
+    z-index: 1000;
+    /* Ensure it's on top of other content */
 }
 
 .collections-menu-container {
@@ -1907,8 +1947,10 @@ body {
     text-align: center;
     max-width: 800px;
     width: 90%;
-    max-height: 90vh; /* Limit height to prevent overflow */
-    overflow-y: auto; /* Enable scrolling if content exceeds max-height */
+    max-height: 90vh;
+    /* Limit height to prevent overflow */
+    overflow-y: auto;
+    /* Enable scrolling if content exceeds max-height */
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
@@ -1971,8 +2013,9 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 .collection-item-card.black {
- border: 3px solid rgb(0, 0, 0);
+    border: 3px solid rgb(0, 0, 0);
 }
 
 .collection-item-card.unknown {
@@ -2013,7 +2056,6 @@ body {
 }
 
 .btn-back {
-    margin-top: 20px;
     padding: 12px 28px;
     font-size: 16px;
     font-weight: bold;
@@ -2089,81 +2131,100 @@ body {
 
 /* HOLO EFFECT */
 .holo-effect {
-    background: 
-        radial-gradient(circle at 50% 60%, rgba(200, 160, 255, 0.45) 0%, rgba(255,255,255,0.08) 60%, rgba(0,0,0,0) 100%),
+    background:
+        radial-gradient(circle at 50% 60%, rgba(200, 160, 255, 0.45) 0%, rgba(255, 255, 255, 0.08) 60%, rgba(0, 0, 0, 0) 100%),
         linear-gradient(45deg, #c7aaff 0%, #fff 100%);
     border: 2px solid #c7aaff;
-    box-shadow: 0 0 24px 6px rgba(200,160,255,0.25), 0 0 0 2px #fff inset;
+    box-shadow: 0 0 24px 6px rgba(200, 160, 255, 0.25), 0 0 0 2px #fff inset;
     position: relative;
-        background-size: cover;
+    background-size: cover;
     background-position: center;
     overflow: hidden;
 }
+
 .holo-effect::after {
     content: "";
     position: absolute;
-    left: 50%; top: 50%;
+    left: 50%;
+    top: 50%;
     width: 120%;
     height: 120%;
     transform: translate(-50%, -50%) scale(0.7);
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(200,160,255,0.15) 60%, rgba(0,0,0,0) 100%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(200, 160, 255, 0.15) 60%, rgba(0, 0, 0, 0) 100%);
     opacity: 0.7;
     pointer-events: none;
     animation: holo-shine 2.5s infinite linear;
     z-index: 2;
 }
+
 @keyframes holo-shine {
-    0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0.7; }
-    60% { opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0; }
+    0% {
+        transform: translate(-50%, -50%) scale(0.7);
+        opacity: 0.7;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0;
+    }
 }
 
 /* POLY EFFECT */
 .poly-effect {
     border: 2px solid #fff;
     background-blend-mode: lighten;
-        background-size: cover;
+    background-size: cover;
     background-position: center;
     position: relative;
     overflow: hidden;
 }
+
 .poly-effect::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: 8px;
-    background: repeating-linear-gradient(
-        120deg,
-        #ff0080 0%,
-        #ff8c00 20%,
-        #40e0d0 40%,
-        #8a2be2 60%,
-        #ff0080 80%,
-        #ff8c00 100%
-    );
+    background: repeating-linear-gradient(120deg,
+            #ff0080 0%,
+            #ff8c00 20%,
+            #40e0d0 40%,
+            #8a2be2 60%,
+            #ff0080 80%,
+            #ff8c00 100%);
     opacity: 0.65;
     mix-blend-mode: screen;
     z-index: 1;
     animation: poly-rainbow-move 3.5s linear infinite;
 }
+
 .poly-effect::after {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: 8px;
-    background: linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 100%);
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 100%);
     z-index: 2;
     pointer-events: none;
 }
+
 @keyframes poly-rainbow-move {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 100% 100%; }
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 100% 100%;
+    }
 }
 
 /* NEGATIVE EFFECT */
 .negative-effect {
-        background-size: cover;
+    background-size: cover;
     background-position: center;
     filter: invert(1) hue-rotate(180deg) saturate(1.2) brightness(1.1);
     border: 2px solid #fff;
@@ -2255,11 +2316,11 @@ body {
 .shop-joker-card.foil-effect,
 .preview-joker-card.foil-effect,
 .collection-item-card.foil-effect {
-   
+
     background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), rgba(192, 192, 192, 0.5));
     border: 3px solid #c0c0c0;
     box-shadow: 0 0 15px rgba(192, 192, 192, 0.8);
-     background-size: cover;
+    background-size: cover;
     background-position: center;
 }
 
@@ -2276,7 +2337,7 @@ body {
     background-position: center;
     border: 3px solid #87ceeb;
     box-shadow: 0 0 20px rgba(135, 206, 235, 0.8);
-     background-size: cover;
+    background-size: cover;
     background-position: center;
 }
 
@@ -2289,7 +2350,7 @@ body {
     background: linear-gradient(45deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.6));
     border: 3px solid #ffd700;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-     background-size: cover;
+    background-size: cover;
     background-position: center;
 }
 
@@ -2298,17 +2359,18 @@ body {
 .preview-joker-card.glass-effect,
 .collection-item-card.glass-effect {
     opacity: 0.7;
-    background: 
-        linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(200,240,255,0.12) 40%, rgba(255,255,255,0.25) 100%),
-        linear-gradient(45deg, rgba(180, 220, 255, 0.18) 0%, rgba(255,255,255,0.07) 100%);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(200, 240, 255, 0.12) 40%, rgba(255, 255, 255, 0.25) 100%),
+        linear-gradient(45deg, rgba(180, 220, 255, 0.18) 0%, rgba(255, 255, 255, 0.07) 100%);
     background-blend-mode: lighten;
     background-size: cover;
     background-position: center;
     border: 3px dotted #b8eaff;
-    box-shadow: 0 0 24px 6px rgba(180,220,255,0.25), 0 0 0 2px #fff inset;
+    box-shadow: 0 0 24px 6px rgba(180, 220, 255, 0.25), 0 0 0 2px #fff inset;
     position: relative;
     overflow: hidden;
 }
+
 .joker-card.glass-effect::before,
 .shop-joker-card.glass-effect::before,
 .preview-joker-card.glass-effect::before,
@@ -2320,12 +2382,13 @@ body {
     width: 80%;
     height: 80%;
     border-radius: 12px;
-    background: linear-gradient(120deg, rgba(255,255,255,0.25) 0%, rgba(200,240,255,0.12) 100%);
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.25) 0%, rgba(200, 240, 255, 0.12) 100%);
     opacity: 0.5;
     pointer-events: none;
     z-index: 2;
     filter: blur(1px);
 }
+
 .joker-card.glass-effect::after,
 .shop-joker-card.glass-effect::after,
 .preview-joker-card.glass-effect::after,
@@ -2344,4 +2407,18 @@ body {
     transform: rotate(-25deg);
     filter: blur(0.5px);
     animation: glass-shine-diagonal 8.5s linear infinite;
+}
+
+.card-score-animation {
+    font-size: 2em;
+    font-weight: bold;
+    color: #4ecdc4;
+    text-shadow: 0 0 10px rgba(78, 205, 196, 0.8);
+    z-index: 500;
+    pointer-events: none;
+    white-space: nowrap;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #4ecdc4;
 }

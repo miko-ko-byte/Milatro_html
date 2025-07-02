@@ -10,8 +10,26 @@ const musicTracks = {
 function startMusicSystem() {
     for (const track in musicTracks) {
         let audio = musicTracks[track];
-        audio.volume = (track === "main") ? 1 : 0;
-        audio.play().catch(e => console.warn(`No se pudo iniciar ${track}:`, e));
+        if (track === "main") {
+            audio.volume = 0;
+            audio.play().then(() => {
+                // Fade in main music
+                let progress = 0;
+                const duration = 5000; // 2 seconds fade-in
+                const step = 1 / (duration / 50);
+                const fadeIn = setInterval(() => {
+                    progress += 50;
+                    audio.volume = Math.min(1, audio.volume + step);
+                    if (progress >= duration) {
+                        audio.volume = 1;
+                        clearInterval(fadeIn);
+                    }
+                }, 50);
+            }).catch(e => console.warn(`No se pudo iniciar main:`, e));
+        } else {
+            audio.volume = 0;
+            audio.play().catch(e => console.warn(`No se pudo iniciar ${track}:`, e));
+        }
     }
 }
 

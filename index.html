@@ -109,7 +109,9 @@
         </div>
         <div class="intro-logo" id="intro-logo" onclick="enterMainMenu()">
             <h1>ADVERTENCIA!!!</h1>
-            <p>ESTO ES UNA BETA SERRADA! NO ESTA TERMINADO Y PROBABLEMENTE NUNCA LO ESTARA - Haz click para comenzar</p>
+            <p>ESTO ES UNA BETA SERRADA! NO ESTA TERMINADO Y PROBABLEMENTE NUNCA LO ESTARA</p>
+            <p>haga click para comenzar</p>
+            <img src="./images/jokers/joker.png" class="loading-joker" alt="loading">
         </div>
         <div class="boot-menu">
             <div class="boot-menu-main">
@@ -128,7 +130,7 @@
             <!-- Versión del juego arriba a la derecha -->
             <div class="game-version" id="game-version">???</div>
             <div class="boot-menu-start-game" style="display: none;">
-                <h1>Start Game</h1>
+                <img src="./images/logo.png" class="boot-logo" alt="Milatro Logo">
                 <div class="button-container">
                     <div>
                         <label for="deck-type">Tipo de Baraja:</label>
@@ -164,8 +166,7 @@
                         </select>
                     </div>
                     <button class="btn-play" onclick="prepareGame()">Iniciar</button>
-                    <button class="btn-play" onclick="goToMenu()">Volver al Menú Principal</button>
-                    <p>Desarrollado por miko</p>
+                    <button class="btn-back" onclick="goToMenu()">atras</button>
                 </div>
             </div>
         </div>
@@ -197,6 +198,7 @@
                     </div>
                     <p id="completion-percentage">0%</p>
                 </div>
+                br
                 <button class="btn-back" onclick="hideCollectionsMenu()">Volver</button>
             </div>
         </div>
