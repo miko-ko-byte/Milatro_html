@@ -7,7 +7,7 @@ class Updater {
 
     async checkForUpdates() {
         try {
-            const response = await fetch('/version.json');
+            const response = await fetch('./version.json');
             const data = await response.json();
             this.latestVersion = data.version;
             this.compareVersions();
@@ -18,7 +18,7 @@ class Updater {
 
     async loadCurrentVersion() {
         try {
-            const response = await fetch('/version.json');
+            const response = await fetch('./version.json');
             const data = await response.json();
             this.currentVersion = data.version;
         } catch (error) {
@@ -34,7 +34,7 @@ class Updater {
 
     async showUpdateNotification() {
         try {
-            const response = await fetch('/update_log.json');
+            const response = await fetch('./update_log.json');
             const data = await response.json();
             this.updateLog = data.versions;
             const latestChanges = this.updateLog.find(v => v.version === this.latestVersion);
