@@ -1,10 +1,10 @@
 {
     "versions": [
         {
-            "version": "1.0.0",
+            "version": "1.0.1",
             "date": "2025-07-02",
             "changes": [
-                "Initial release"
+                "Initial release on Github!"
             ]
         }
     ]
