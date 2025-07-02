@@ -1,86 +1,206 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Cartas Interactivo</title>
-    <link rel="stylesheet" href="styles.css">
-
+    <title>Creador de Cartas Súper Personalizable</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
     <style>
-        /* Estilos generales de la página */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .card-display-area {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            padding: 40px;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            min-height: 600px;
         }
 
-        /* Área de visualización de la carta */
-        .card-display-area {
-            padding: 40px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 20px;
-            margin-bottom: 30px;
-        }
-
-        /* 2. Estilos para hacer la carta grande y legible */
-        .card.large-format {
+        /* Estilos de la carta personalizable */
+        .card {
             width: 400px;
             height: 580px;
             border-radius: 20px;
+            position: relative;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* Borde interno que no afecta el tamaño total */
+            box-sizing: border-box;
+            border: 2px solid #ffffff;
             padding: 20px;
-            cursor: default;
-            animation: none;
-            transform: none !important;
-        }
-        
-        .card.large-format .card-rank { font-size: 60px; }
-        .card.large-format .card-suit { font-size: 150px; }
-        .card.large-format .card-rank-bottom { font-size: 60px; }
-        
-        /* Panel de controles */
-        .controls {
-            text-align: center;
-            background: rgba(0,0,0,0.2);
-            padding: 20px 30px;
-            border-radius: 15px;
         }
 
-        /* MODIFICACIÓN INICIO: Estilos para los nuevos menús desplegables */
-        .card-selectors {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
+        .card-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.8;
         }
-        .selector-group label {
+
+        .card-element {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .card-rank-top {
+            font-size: 60px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-suit-center {
+            font-size: 150px;
+            text-align: center;
+            align-self: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-rank-bottom {
+            font-size: 60px;
+            font-weight: bold;
+            text-align: right;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-custom-text {
+            position: absolute;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            z-index: 3;
+            white-space: pre-line;
+            line-height: 1.2;
+        }
+
+        /* Colores de palos */
+        .hearts {
+            color: #e74c3c;
+        }
+
+        .diamonds {
+            color: #e74c3c;
+        }
+
+        .clubs {
+            color: #2c3e50;
+        }
+
+        .spades {
+            color: #2c3e50;
+        }
+
+        /* Panel de controles */
+        .controls {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .control-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .control-section h3 {
+            margin: 0 0 15px 0;
+            color: #4ecdc4;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
             display: block;
             margin-bottom: 5px;
             font-size: 14px;
             color: #ccc;
         }
-        .selector-group select {
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: none;
-            background-color: #fff;
-            color: #2c3e50;
-            width: 150px;
-        }
-        /* MODIFICACIÓN FIN */
 
-        .controls button {
-            padding: 15px 30px;
+        .control-group input,
+        .control-group select,
+        .control-group textarea {
+            width: 100%;
+            padding: 8px;
             border: none;
-            border-radius: 10px;
+            border-radius: 5px;
+            background: white;
+            color: #2c3e50;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .control-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .control-group input[type="range"] {
+            background: #4ecdc4;
+        }
+
+        .control-group input[type="color"] {
+            width: 50px;
+            height: 30px;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+        }
+
+        .control-group input[type="file"] {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .flex-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .flex-controls .control-group {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
@@ -90,117 +210,525 @@
             color: white;
             margin-top: 10px;
         }
-        .controls button:hover {
-            transform: scale(1.05);
+
+        button:hover {
+            transform: scale(1.02);
             box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                width: 300px;
+                height: 435px;
+            }
+
+            .card-rank-top,
+            .card-rank-bottom {
+                font-size: 40px;
+            }
+
+            .card-suit-center {
+                font-size: 100px;
+            }
         }
     </style>
 </head>
+
 <body>
+    <div class="container">
+        <div class="card-display-area">
+            <div id="card-to-download" class="card spades">
+                <div class="card-background" id="card-background"></div>
 
-    <div class="card-display-area">
-        <div id="card-to-download" class="card large-format spades">
-            <div class="card-rank">A</div>
-            <div class="card-suit">♠</div>
-            <div class="card-rank-bottom">A</div>
-        </div>
-    </div>
+                <div class="card-element card-rank-top" id="rank-top">A</div>
 
-    <div class="controls">
-        <div class="card-selectors">
-            <div class="selector-group">
-                <label for="rank-select">Valor</label>
-                <select id="rank-select"></select>
-            </div>
-            <div class="selector-group">
-                <label for="suit-select">Palo</label>
-                <select id="suit-select"></select>
+                <div class="card-element card-suit-center" id="suit-center">♠</div>
+
+                <div class="card-element card-rank-bottom" id="rank-bottom">A</div>
+
+                <div class="card-custom-text" id="custom-text-1" style="top: 50px; left: 50px;">Texto 1</div>
+                <div class="card-custom-text" id="custom-text-2" style="top: 100px; right: 50px;">Texto 2</div>
             </div>
         </div>
-        <button id="download-btn">Descargar como PNG</button>
+
+        <div class="controls">
+            <!-- Controles básicos de carta -->
+            <div class="control-section">
+                <h3>⚡ Carta Básica</h3>
+                <div class="flex-controls">
+                    <div class="control-group">
+                        <label for="rank-select">Valor</label>
+                        <select id="rank-select">
+                            <option value="A">A</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="J">J</option>
+                            <option value="Q">Q</option>
+                            <option value="K">K</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="suit-select">Palo</label>
+                        <select id="suit-select">
+                            <option value="hearts">Corazones ♥</option>
+                            <option value="diamonds">Diamantes ♦</option>
+                            <option value="clubs">Tréboles ♣</option>
+                            <option value="spades" selected>Picas ♠</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Elementos visibles -->
+            <div class="control-section">
+                <h3>👁️ Elementos Visibles</h3>
+                <div class="control-group">
+                    <label><input type="checkbox" id="show-rank-top" checked> Mostrar valor superior</label>
+                </div>
+                <div class="control-group">
+                    <label><input type="checkbox" id="show-suit-center" checked> Mostrar símbolo central</label>
+                </div>
+                <div class="control-group">
+                    <label><input type="checkbox" id="show-rank-bottom" checked> Mostrar valor inferior</label>
+                </div>
+                <div class="control-group">
+                    <label><input type="checkbox" id="show-custom-text-1"> Mostrar texto personalizado 1</label>
+                </div>
+                <div class="control-group">
+                    <label><input type="checkbox" id="show-custom-text-2"> Mostrar texto personalizado 2</label>
+                </div>
+            </div>
+
+            <!-- Fondo de carta -->
+            <div class="control-section">
+                <h3>🖼️ Fondo de Carta</h3>
+                <div class="control-group">
+                    <label for="background-image">Imagen de fondo</label>
+                    <input type="file" id="background-image" accept="image/*">
+                </div>
+                <div class="control-group">
+                    <label for="background-color">Color de fondo</label>
+                    <input type="color" id="background-color" value="#ffffff">
+                </div>
+                <div class="control-group">
+                    <label for="background-opacity">Opacidad del fondo: <span id="bg-opacity-value">0.8</span></label>
+                    <input type="range" id="background-opacity" min="0" max="1" step="0.1" value="0.8">
+                </div>
+                <div class="control-group">
+                    <label for="background-zoom">Zoom de imagen: <span id="bg-zoom-value">100%</span></label>
+                    <input type="range" id="background-zoom" min="50" max="200" value="100">
+                </div>
+            </div>
+
+            <!-- Borde de carta -->
+            <div class="control-section">
+                <h3>🖼️ Borde de Carta</h3>
+                <div class="control-group">
+                    <label><input type="checkbox" id="show-border" checked> Mostrar borde</label>
+                </div>
+                <div class="flex-controls">
+                    <div class="control-group">
+                        <label for="border-color">Color del borde</label>
+                        <input type="color" id="border-color" value="#ffffff">
+                    </div>
+                    <div class="control-group">
+                        <label for="border-width">Grosor: <span id="border-width-value">2px</span></label>
+                        <input type="range" id="border-width" min="0" max="20" value="2">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Textos personalizados -->
+            <div class="control-section">
+                <h3>✏️ Textos Personalizados</h3>
+                <div class="control-group">
+                    <label for="custom-text-1-content">Texto 1</label>
+                    <textarea id="custom-text-1-content" rows="3"
+                        placeholder="Escribe tu texto aquí&#10;Puedes usar múltiples líneas">Texto 1</textarea>
+                </div>
+                <div class="flex-controls">
+                    <div class="control-group">
+                        <label for="text-1-color">Color</label>
+                        <input type="color" id="text-1-color" value="#000000">
+                    </div>
+                    <div class="control-group">
+                        <label for="text-1-size">Tamaño: <span id="text-1-size-value">24px</span></label>
+                        <input type="range" id="text-1-size" min="12" max="72" value="24">
+                    </div>
+                </div>
+                <div class="flex-controls">
+                    <div class="control-group">
+                        <label for="text-1-x">Posición X: <span id="text-1-x-value">50px</span></label>
+                        <input type="range" id="text-1-x" min="0" max="360" value="50">
+                    </div>
+                    <div class="control-group">
+                        <label for="text-1-y">Posición Y: <span id="text-1-y-value">50px</span></label>
+                        <input type="range" id="text-1-y" min="0" max="540" value="50">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="text-1-rotation">Rotación: <span id="text-1-rotation-value">0°</span></label>
+                    <input type="range" id="text-1-rotation" min="-180" max="180" value="0">
+                </div>
+
+                <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 20px 0;">
+
+                <div class="control-group">
+                    <label for="custom-text-2-content">Texto 2</label>
+                    <textarea id="custom-text-2-content" rows="3"
+                        placeholder="Escribe tu texto aquí&#10;Puedes usar múltiples líneas">Texto 2</textarea>
+                </div>
+                <div class="flex-controls">
+                    <div class="control-group">
+                        <label for="text-2-color">Color</label>
+                        <input type="color" id="text-2-color" value="#000000">
+                    </div>
+                    <div class="control-group">
+                        <label for="text-2-size">Tamaño: <span id="text-2-size-value">24px</span></label>
+                        <input type="range" id="text-2-size" min="12" max="72" value="24">
+                    </div>
+                </div>
+                <div class="flex-controls">
+                    <div class="control-group">
+                        <label for="text-2-x">Posición X: <span id="text-2-x-value">310px</span></label>
+                        <input type="range" id="text-2-x" min="0" max="360" value="310">
+                    </div>
+                    <div class="control-group">
+                        <label for="text-2-y">Posición Y: <span id="text-2-y-value">100px</span></label>
+                        <input type="range" id="text-2-y" min="0" max="540" value="100">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="text-2-rotation">Rotación: <span id="text-2-rotation-value">0°</span></label>
+                    <input type="range" id="text-2-rotation" min="-180" max="180" value="0">
+                </div>
+            </div>
+
+            <!-- Rotación de elementos principales -->
+            <div class="control-section">
+                <h3>🔄 Rotación de Elementos</h3>
+                <div class="control-group">
+                    <label for="rank-top-rotation">Rotación valor superior: <span
+                            id="rank-top-rotation-value">0°</span></label>
+                    <input type="range" id="rank-top-rotation" min="-180" max="180" value="0">
+                </div>
+                <div class="control-group">
+                    <label for="suit-center-rotation">Rotación símbolo central: <span
+                            id="suit-center-rotation-value">0°</span></label>
+                    <input type="range" id="suit-center-rotation" min="-180" max="180" value="0">
+                </div>
+                <div class="control-group">
+                    <label for="rank-bottom-rotation">Rotación valor inferior: <span
+                            id="rank-bottom-rotation-value">0°</span></label>
+                    <input type="range" id="rank-bottom-rotation" min="-180" max="180" value="0">
+                </div>
+            </div>
+
+            <!-- Colores personalizados -->
+            <div class="control-section">
+                <h3>🎨 Colores Personalizados</h3>
+                <div class="control-group">
+                    <label for="rank-color">Color de valores</label>
+                    <input type="color" id="rank-color" value="#2c3e50">
+                </div>
+                <div class="control-group">
+                    <label for="suit-color">Color de símbolo</label>
+                    <input type="color" id="suit-color" value="#2c3e50">
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <button id="reset-btn">🔄 Resetear Todo</button>
+            <button id="download-btn">📥 Descargar PNG</button>
+        </div>
     </div>
 
     <script>
-        // 4. JavaScript para la funcionalidad interactiva y la descarga
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- Definiciones de Cartas ---
+        document.addEventListener('DOMContentLoaded', function () {
+            // Referencias DOM
             const suits = { hearts: '♥', diamonds: '♦', clubs: '♣', spades: '♠' };
-            const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-            const suitNames = Object.keys(suits);
+            const cardElement = document.getElementById('card-to-download');
+            const backgroundElement = document.getElementById('card-background');
 
-            // --- Referencias a elementos del DOM ---
+            // Elementos de carta
+            const rankTop = document.getElementById('rank-top');
+            const suitCenter = document.getElementById('suit-center');
+            const rankBottom = document.getElementById('rank-bottom');
+            const customText1 = document.getElementById('custom-text-1');
+            const customText2 = document.getElementById('custom-text-2');
+
+            // Controles básicos
             const rankSelect = document.getElementById('rank-select');
             const suitSelect = document.getElementById('suit-select');
-            const cardElement = document.getElementById('card-to-download');
-            const rankDisplay = cardElement.querySelector('.card-rank');
-            const suitDisplay = cardElement.querySelector('.card-suit');
-            const rankBottomDisplay = cardElement.querySelector('.card-rank-bottom');
+
+            // Controles de visibilidad
+            const showRankTop = document.getElementById('show-rank-top');
+            const showSuitCenter = document.getElementById('show-suit-center');
+            const showRankBottom = document.getElementById('show-rank-bottom');
+            const showCustomText1 = document.getElementById('show-custom-text-1');
+            const showCustomText2 = document.getElementById('show-custom-text-2');
+
+            // Controles de fondo
+            const backgroundImageInput = document.getElementById('background-image');
+            const backgroundColorInput = document.getElementById('background-color');
+            const backgroundOpacityInput = document.getElementById('background-opacity');
+            const backgroundZoomInput = document.getElementById('background-zoom');
+
+            // Controles de borde
+            const showBorder = document.getElementById('show-border');
+            const borderColor = document.getElementById('border-color');
+            const borderWidth = document.getElementById('border-width');
+
+            // Controles de texto personalizado
+            const text1Content = document.getElementById('custom-text-1-content');
+            const text1Color = document.getElementById('text-1-color');
+            const text1Size = document.getElementById('text-1-size');
+            const text1X = document.getElementById('text-1-x');
+            const text1Y = document.getElementById('text-1-y');
+            const text1Rotation = document.getElementById('text-1-rotation');
+
+            const text2Content = document.getElementById('custom-text-2-content');
+            const text2Color = document.getElementById('text-2-color');
+            const text2Size = document.getElementById('text-2-size');
+            const text2X = document.getElementById('text-2-x');
+            const text2Y = document.getElementById('text-2-y');
+            const text2Rotation = document.getElementById('text-2-rotation');
+
+            // Controles de rotación
+            const rankTopRotation = document.getElementById('rank-top-rotation');
+            const suitCenterRotation = document.getElementById('suit-center-rotation');
+            const rankBottomRotation = document.getElementById('rank-bottom-rotation');
+
+            // Controles de color
+            const rankColorInput = document.getElementById('rank-color');
+            const suitColorInput = document.getElementById('suit-color');
+
+            // Botones
+            const resetBtn = document.getElementById('reset-btn');
             const downloadBtn = document.getElementById('download-btn');
 
-            // --- Función para poblar los menús desplegables ---
-            function populateSelectors() {
-                ranks.forEach(rank => {
-                    const option = document.createElement('option');
-                    option.value = rank;
-                    option.textContent = rank;
-                    rankSelect.appendChild(option);
-                });
-
-                suitNames.forEach(suitName => {
-                    const option = document.createElement('option');
-                    option.value = suitName;
-                    // Capitalizar el nombre para mostrar (e.g., "hearts" -> "Hearts")
-                    option.textContent = suitName.charAt(0).toUpperCase() + suitName.slice(1);
-                    suitSelect.appendChild(option);
-                });
-                // Establecer el valor inicial
-                suitSelect.value = 'spades';
+            // Función para actualizar valores de sliders
+            function updateSliderValues() {
+                document.getElementById('bg-opacity-value').textContent = backgroundOpacityInput.value;
+                document.getElementById('bg-zoom-value').textContent = backgroundZoomInput.value + '%';
+                document.getElementById('border-width-value').textContent = borderWidth.value + 'px';
+                document.getElementById('text-1-size-value').textContent = text1Size.value + 'px';
+                document.getElementById('text-1-x-value').textContent = text1X.value + 'px';
+                document.getElementById('text-1-y-value').textContent = text1Y.value + 'px';
+                document.getElementById('text-1-rotation-value').textContent = text1Rotation.value + '°';
+                document.getElementById('text-2-size-value').textContent = text2Size.value + 'px';
+                document.getElementById('text-2-x-value').textContent = text2X.value + 'px';
+                document.getElementById('text-2-y-value').textContent = text2Y.value + 'px';
+                document.getElementById('text-2-rotation-value').textContent = text2Rotation.value + '°';
+                document.getElementById('rank-top-rotation-value').textContent = rankTopRotation.value + '°';
+                document.getElementById('suit-center-rotation-value').textContent = suitCenterRotation.value + '°';
+                document.getElementById('rank-bottom-rotation-value').textContent = rankBottomRotation.value + '°';
             }
 
-            // --- Función para actualizar la carta en pantalla ---
-            function updateCardDisplay() {
+            // Función para actualizar la carta
+            function updateCard() {
                 const selectedRank = rankSelect.value;
                 const selectedSuitName = suitSelect.value;
                 const selectedSuitSymbol = suits[selectedSuitName];
 
-                // Actualizar texto y símbolo
-                rankDisplay.textContent = selectedRank;
-                rankBottomDisplay.textContent = selectedRank;
-                suitDisplay.textContent = selectedSuitSymbol;
+                // Actualizar contenido básico
+                rankTop.textContent = selectedRank;
+                rankBottom.textContent = selectedRank;
+                suitCenter.textContent = selectedSuitSymbol;
 
-                // Actualizar la clase para cambiar el color
-                cardElement.classList.remove(...suitNames); // Quita la clase de palo anterior
-                cardElement.classList.add(selectedSuitName); // Añade la nueva clase de palo
+                // Actualizar clase de palo
+                cardElement.classList.remove('hearts', 'diamonds', 'clubs', 'spades');
+                cardElement.classList.add(selectedSuitName);
+
+                // Actualizar visibilidad
+                rankTop.classList.toggle('hidden', !showRankTop.checked);
+                suitCenter.classList.toggle('hidden', !showSuitCenter.checked);
+                rankBottom.classList.toggle('hidden', !showRankBottom.checked);
+                customText1.classList.toggle('hidden', !showCustomText1.checked);
+                customText2.classList.toggle('hidden', !showCustomText2.checked);
+
+                // Actualizar fondo
+                backgroundElement.style.backgroundColor = backgroundColorInput.value;
+                backgroundElement.style.opacity = backgroundOpacityInput.value;
+                backgroundElement.style.backgroundSize = backgroundZoomInput.value + '%';
+
+                // Actualizar borde interno (no afecta el tamaño total)
+                if (showBorder.checked) {
+                    cardElement.style.borderWidth = borderWidth.value + 'px';
+                    cardElement.style.borderColor = borderColor.value;
+                    cardElement.style.borderStyle = 'solid';
+                    // Ajustar el padding para compensar el borde interno
+                    const paddingValue = Math.max(20 - parseInt(borderWidth.value), 10);
+                    cardElement.style.padding = paddingValue + 'px';
+                } else {
+                    cardElement.style.border = 'none';
+                    cardElement.style.padding = '20px';
+                }
+
+                // Actualizar textos personalizados
+                customText1.textContent = text1Content.value;
+                customText1.style.color = text1Color.value;
+                customText1.style.fontSize = text1Size.value + 'px';
+                customText1.style.left = text1X.value + 'px';
+                customText1.style.top = text1Y.value + 'px';
+                customText1.style.transform = `rotate(${text1Rotation.value}deg)`;
+
+                customText2.textContent = text2Content.value;
+                customText2.style.color = text2Color.value;
+                customText2.style.fontSize = text2Size.value + 'px';
+                customText2.style.left = text2X.value + 'px';
+                customText2.style.top = text2Y.value + 'px';
+                customText2.style.transform = `rotate(${text2Rotation.value}deg)`;
+
+                // Actualizar rotaciones de elementos principales
+                rankTop.style.transform = `rotate(${rankTopRotation.value}deg)`;
+                suitCenter.style.transform = `rotate(${suitCenterRotation.value}deg)`;
+                rankBottom.style.transform = `rotate(${rankBottomRotation.value}deg)`;
+
+                // Actualizar colores personalizados
+                rankTop.style.color = rankColorInput.value;
+                rankBottom.style.color = rankColorInput.value;
+                suitCenter.style.color = suitColorInput.value;
+
+                updateSliderValues();
             }
 
-            // --- Función para manejar la descarga ---
-            function handleDownload() {
+            // Manejar carga de imagen de fondo
+            backgroundImageInput.addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        backgroundElement.style.backgroundImage = `url(${e.target.result})`;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Función para resetear todo
+            function resetCard() {
+                // Resetear controles básicos
+                rankSelect.value = 'A';
+                suitSelect.value = 'spades';
+
+                // Resetear visibilidad
+                showRankTop.checked = true;
+                showSuitCenter.checked = true;
+                showRankBottom.checked = true;
+                showCustomText1.checked = false;
+                showCustomText2.checked = false;
+
+                // Resetear fondo
+                backgroundColorInput.value = '#ffffff';
+                backgroundOpacityInput.value = '0.8';
+                backgroundZoomInput.value = '100';
+                backgroundElement.style.backgroundImage = '';
+
+                // Resetear borde
+                showBorder.checked = true;
+                borderColor.value = '#ffffff';
+                borderWidth.value = '2';
+
+                // Resetear textos
+                text1Content.value = 'Texto 1';
+                text1Color.value = '#000000';
+                text1Size.value = '24';
+                text1X.value = '50';
+                text1Y.value = '50';
+                text1Rotation.value = '0';
+
+                text2Content.value = 'Texto 2';
+                text2Color.value = '#000000';
+                text2Size.value = '24';
+                text2X.value = '310';
+                text2Y.value = '100';
+                text2Rotation.value = '0';
+
+                // Resetear rotaciones
+                rankTopRotation.value = '0';
+                suitCenterRotation.value = '0';
+                rankBottomRotation.value = '0';
+
+                // Resetear colores
+                rankColorInput.value = '#2c3e50';
+                suitColorInput.value = '#2c3e50';
+
+                updateCard();
+            }
+
+            // Función para descargar
+            function downloadCard() {
                 if (typeof html2canvas === 'function') {
                     html2canvas(cardElement, {
                         backgroundColor: null,
-                        scale: 3
+                        scale: 3,
+                        useCORS: true
                     }).then(canvas => {
                         const image = canvas.toDataURL('image/png');
                         const link = document.createElement('a');
-                        const cardName = `${rankSelect.value}_of_${suitSelect.value}`;
+                        const cardName = `carta_${rankSelect.value}_${suitSelect.value}_${Date.now()}`;
                         link.download = `${cardName}.png`;
                         link.href = image;
                         link.click();
                     });
                 } else {
-                    alert('La librería para descargar imágenes no se ha cargado.');
+                    alert('Error: No se puede descargar la imagen.');
                 }
             }
 
-            // --- Inicialización y Event Listeners ---
-            populateSelectors();
-            updateCardDisplay(); // Llama una vez para establecer el estado inicial
-            
-            rankSelect.addEventListener('change', updateCardDisplay);
-            suitSelect.addEventListener('change', updateCardDisplay);
-            downloadBtn.addEventListener('click', handleDownload);
+            // Event listeners
+            rankSelect.addEventListener('change', updateCard);
+            suitSelect.addEventListener('change', updateCard);
+
+            showRankTop.addEventListener('change', updateCard);
+            showSuitCenter.addEventListener('change', updateCard);
+            showRankBottom.addEventListener('change', updateCard);
+            showCustomText1.addEventListener('change', updateCard);
+            showCustomText2.addEventListener('change', updateCard);
+
+            backgroundColorInput.addEventListener('input', updateCard);
+            backgroundOpacityInput.addEventListener('input', updateCard);
+            backgroundZoomInput.addEventListener('input', updateCard);
+
+            showBorder.addEventListener('change', updateCard);
+            borderColor.addEventListener('input', updateCard);
+            borderWidth.addEventListener('input', updateCard);
+
+            text1Content.addEventListener('input', updateCard);
+            text1Color.addEventListener('input', updateCard);
+            text1Size.addEventListener('input', updateCard);
+            text1X.addEventListener('input', updateCard);
+            text1Y.addEventListener('input', updateCard);
+            text1Rotation.addEventListener('input', updateCard);
+
+            text2Content.addEventListener('input', updateCard);
+            text2Color.addEventListener('input', updateCard);
+            text2Size.addEventListener('input', updateCard);
+
+            text2X.addEventListener('input', updateCard);
+            text2Y.addEventListener('input', updateCard);
+            resetBtn.addEventListener('click', resetCard);
+            downloadBtn.addEventListener('click', downloadCard);
+
+            // Inicialización
+            updateCard();
         });
     </script>
-
 </body>
+
 </html>

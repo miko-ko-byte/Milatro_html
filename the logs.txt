@@ -1,0 +1,18 @@
+boot_menu.js:1 [boot_menu.js] boot_menu.js loaded
+boot_menu.js:2 [boot_menu.js] Starting boot menu...
+boot_menu.js:876 [boot_menu.js] Initial UI setup complete. Only main boot menu visible.
+boot_menu.js:885 [boot_menu.js] Intro logo displayed. Waiting for user to enter main menu.
+boot_menu.js:317 [boot_menu.js] Setting background: main
+boot_menu.js:989 [boot_menu.js] Core game event listeners attached.
+boot_menu.js:893 [boot_menu.js] Entered main menu from intro logo.
+boot_menu.js:940 [boot_menu.js] jokers encontrados cargados!
+boot_menu.js:817 [boot_menu.js] Showing start game menu.
+boot_menu.js:503 [boot_menu.js] Score updated in UI: 0
+boot_menu.js:529 [boot_menu.js] Deck count updated in UI: 0
+boot_menu.js:532 [boot_menu.js] UI updated with current game state.
+boot_menu.js:550 [boot_menu.js] Jokers rendered: 
+[]
+boot_menu.js:654 [boot_menu.js] Returned to main boot menu. Game and shop panels hidden.
+collections_menu.js:26 Uncaught TypeError: Cannot read properties of null (reading 'style')
+switchCollectionSection	@	collections_menu.js:26
+onclick	@	index.html:124
