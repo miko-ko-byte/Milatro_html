@@ -1,10 +1,10 @@
 
 function greedy_joker_effect(points, mult, hand, gameState, handInfo) {
-    let newMult = mult;
+    let multAdded = 0;
     hand.forEach(card => {
         if (card.suit === '♦') {
-            newMult += 3;
+            multAdded += 3;
         }
     });
-    return { points: points, mult: newMult };
+    return { points: points, mult: mult + multAdded, message: `+${multAdded} mult!` };
 }

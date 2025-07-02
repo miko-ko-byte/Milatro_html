@@ -242,7 +242,7 @@ const availableJokers = [
         rarity: 'rare',
         description: '+2 de multiplicador si la mano jugada contiene un par.',
         cost: 4,
-        image: './images/jokers/pair.png',
+        image: './images/jokers/triple.png',
         script: './jokers/pair.js',
         canHaveSubEffect: true
     },
@@ -252,7 +252,7 @@ const availableJokers = [
         rarity: 'rare',
         description: 'x2 de multiplicador si la mano jugada contiene doble par.',
         cost: 4,
-        image: './images/jokers/triple.png',
+        image: './images/jokers/tripleA.png',
         script: './jokers/triple.js',
         canHaveSubEffect: true
     },
@@ -451,17 +451,20 @@ function selectBlind(num) {
     document.querySelector('.blind-selection-menu').style.display = 'none';
 
     // El bucle de carga de jokers se ha eliminado de aquí
-
-    const script = document.createElement('script');
-    script.src = './boot_game.js';
-    script.type = 'text/javascript';
-    script.async = false;
-    script.onload = () => {
-        console.log("[boot_menu.js] boot_game.js loaded, calling startingGame()...");
+    if (!document.querySelector('script[src="./boot_game.js"]')) {
+        const script = document.createElement('script');
+        script.src = './boot_game.js';
+        script.type = 'text/javascript';
+        script.async = false;
+        script.onload = () => {
+            console.log("[boot_menu.js] boot_game.js loaded, calling startingGame()...");
+            startingGame();
+        };
+        document.body.appendChild(script);
+        console.log("[boot_menu.js] boot_game.js script appended to DOM.");
+    } else {
         startingGame();
-    };
-    document.body.appendChild(script);
-    console.log("[boot_menu.js] boot_game.js script appended to DOM.");
+    }
 }
 // Reset game state for a new blind
 function resetGameForNewBlind() {
@@ -646,7 +649,7 @@ function renderShopJokers() {
 }
 // Function to go back to the main boot menu
 function goToMenu() {
-    updateUI()
+    document.querySelector('.boot-menu').style.display = 'block';
     document.querySelector('.boot-menu-main').style.display = 'block';
     document.querySelector('.boot-menu-start-game').style.display = 'none';
     document.querySelector('.shop-menu').style.display = 'none';
@@ -660,6 +663,7 @@ function goToMenu() {
 function nextRoundMenu() {
     gameState.score = 0
     gameState.money = + gameState.nextBlindReward
+    gameState.handsLeft = 4; // Reset handsLeft
     //document.querySelector('.game-container').style.display = 'none'; ??? wtf
     document.querySelector('.boot-menu-start-game').style.display = 'none';
     document.querySelector('.shop-menu').style.display = 'none';
@@ -683,7 +687,24 @@ function nextRoundMenu() {
         shopMenu.classList.remove('black-card-background');
         transitionToMusic("shop", 2000)
     }
-    updateUI();
+     console.log("[boot_game.js] Entering nextRoundMenu. Current round:", gameState.round, "Score:", gameState.score, "Target Score:", gameState.targetScore);
+    
+    // Increment round and update target score
+    gameState.round += 1;
+    gameState.targetScore = Math.round(gameState.targetScore * 1.5); // Increase target by 50%
+    gameState.handsLeft = 4; // Reset hands for the new round
+    gameState.discardsLeft = 2; // Reset discards
+    gameState.score = Math.max(0, gameState.score); // Preserve score, ensure non-negative
+    
+    console.log("[boot_game.js] Advanced to round:", gameState.round, "New target score:", gameState.targetScore, "Score preserved:", gameState.score);
+    
+    // Save updated game state
+    
+    
+    // Reset hand and deal new cards
+    gameState.hand = [];
+    gameState.selectedCards = [];
+    dealHand(true);
     renderShopJokers()
     console.log("[boot_menu.js] Shop opened for round:", gameState.round);
 }
@@ -712,7 +733,11 @@ function buyItem(itemType) {
             return;
         }
 
-        const effectFunction = window[jokerData.id + '_effect'];
+        let effectFunction = window[jokerData.id];
+        if (typeof effectFunction !== 'function') {
+            const effectName = jokerData.id.replace(/ /g, '_') + '_effect';
+            effectFunction = window[effectName];
+        }
 
         if (typeof effectFunction === 'function') {
             gameState.money -= cost;
@@ -720,22 +745,24 @@ function buyItem(itemType) {
                 // Replace existing joker with the new version
                 gameState.jokersOwned = gameState.jokersOwned.filter(j => j.name !== jokerData.name);
             }
-            gameState.jokersOwned.push({
+            const newJoker = {
                 ...jokerData,
                 effect: effectFunction,
                 subEffect: jokerData.subEffect
-            });
+            };
+            gameState.jokersOwned.push(newJoker);
+            console.log("[boot_menu.js] Joker purchased and effect applied:", newJoker);
+
             if (jokerData.rarity === 'black card' && !gameState.ownedBlackCards.includes(jokerData.id)) {
                 gameState.ownedBlackCards.push(jokerData.id);
                 console.log("[boot_menu.js] Black card owned:", jokerData.name);
             }
             updateUI();
-            updateUI();
-            renderShopJokers()
+            renderShopJokers();
             showNotification(`¡Compraste ${jokerData.name}${jokerData.subEffect ? ` (${jokerData.subEffect.name})` : ''}!`, 1500 * gameState.animationSpeed);
             previewJoker(jokerIndex); // Refresh preview to update button state
         } else {
-            console.error(`[boot_menu.js] Error: Function '${jokerData.id}_effect' not found in script ${jokerData.script}.`);
+            console.error(`[boot_menu.js] Error: Function '${jokerData.id}' or '${jokerData.id}_effect' not found in script ${jokerData.script}.`);
         }
     }
 
@@ -815,9 +842,13 @@ function exitGame() {
 
 // Function to show start game menu
 function showStartGameMenu() {
-    document.querySelector('.boot-menu-main').style.display = 'none';
-    document.querySelector('.boot-menu-start-game').style.display = 'block';
-    console.log("[boot_menu.js] Showing start game menu.");
+    if (gameState.recovery) {
+        showRecoveryMenu();
+    } else {
+        document.querySelector('.boot-menu-main').style.display = 'none';
+        document.querySelector('.boot-menu-start-game').style.display = 'block';
+        console.log("[boot_menu.js] Showing start game menu.");
+    }
 }
 
 // Function to restart game
@@ -902,6 +933,7 @@ window.addEventListener('load', () => {
 
 // Avanzar al menú principal tras click en logo
 function enterMainMenu() {
+    
     const introLogo = document.getElementById("intro-logo");
     const bootMenu = document.querySelector(".boot-menu");
 
@@ -913,6 +945,13 @@ function enterMainMenu() {
         if (!menu.classList.contains('show')) {
             menu.classList.toggle('show');
             console.log("main menu!");
+            if (localStorage.getItem("timesBooted") == null) {
+                 localStorage.setItem("timesBooted", 1)
+                 console.log("[boot_menu.js] firt boot up! yay :3");
+            } else {
+                 const times = parseInt(localStorage.getItem("timesBooted"), 10) || 0;
+                 localStorage.setItem("timesBooted", times + 1);
+            }
         }
     }, 3000);
 
@@ -997,54 +1036,9 @@ function enterMainMenu() {
         const menu = document.querySelector('.boot-menu');
             menu.classList.toggle('show');
 
-        // Check for recovery state and redirect
-        if (gameState.recovery) {
-            document.querySelector('.boot-menu').style.display = 'none';
-            document.getElementById('recovery-menu').style.display = 'flex';
-            console.log("[boot_menu.js] Redirecting to recovery menu.");
-            // Initialize recovery menu content
-            const recoveryData = localStorage.getItem('recovery');
-            const recoveryInfoElement = document.getElementById('recovery-info');
-            const loadRecoveryBtn = document.getElementById('load-recovery-btn');
-
-            if (recoveryData) {
-                try {
-                    const parsedData = JSON.parse(recoveryData);
-                    if (parsedData && typeof parsedData === 'object' && parsedData.score !== undefined) {
-                        recoveryInfoElement.textContent = 'Recovery data found. Score: ' + parsedData.score + ', Round: ' + parsedData.round;
-                        loadRecoveryBtn.disabled = false;
-                    } else {
-                        recoveryInfoElement.textContent = 'Corrupted recovery data found. Starting new game is recommended.';
-                    }
-                } catch (e) {
-                    recoveryInfoElement.textContent = 'Error parsing recovery data. Starting new game is recommended.';
-                    console.error('Error parsing recovery data:', e);
-                }
-            } else {
-                recoveryInfoElement.textContent = 'No recovery data found. Please start a new game.';
-            }
-        } else {
-            document.querySelector('.boot-menu-main').style.display = 'block';
-        }
+        document.querySelector('.boot-menu-main').style.display = 'block';
+        
     }, 1000); // Match CSS transition duration
-}
-
-function loadRecoveryGame() {
-    const recoveryData = localStorage.getItem('recovery');
-    if (recoveryData) {
-        try {
-            const parsedData = JSON.parse(recoveryData);
-            Object.assign(gameState, parsedData);
-            console.log('Game state loaded from recovery:', gameState);
-            document.getElementById('recovery-menu').style.display = 'none';
-            // Assuming we go to the shop after loading a game
-            nextRoundMenu();
-        } catch (e) {
-            console.error('Failed to load recovery game:', e);
-            alert('Failed to load recovery game. Starting a new game.');
-            startNewGame();
-        }
-    }
 }
 
 function startNewGame() {

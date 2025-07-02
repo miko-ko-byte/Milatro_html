@@ -198,7 +198,8 @@
                     </div>
                     <p id="completion-percentage">0%</p>
                 </div>
-                br
+                <br>
+                <br>
                 <button class="btn-back" onclick="hideCollectionsMenu()">Volver</button>
             </div>
         </div>
@@ -277,11 +278,23 @@
             </div>
         </div>
 
+        <div class="recovery-menu" style="display: none;">
+            <div class="recovery-menu-container">
+                <h2>Recuperar partida</h2>
+                <p>se a detectado una partida sin terminar, ¿quieres continuarla?</p>
+                <div>
+                    <button class="btn btn-play" onclick="continueGame()">Continuar</button>
+                    <button class="btn btn-back" onclick="newGame()">Crear nueva</button>
+                </div>
+            </div>
+        </div>
+
         <div class="notification" id="notification"></div>
 
         <script src="boot_menu.js"></script>
         <script src="music_manager.js"></script>
         <script src="collections_menu.js"></script>
+        <script src="recovery.js"></script>
 </body>
 
 </html>

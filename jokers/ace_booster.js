@@ -1,10 +1,10 @@
 
 function ace_booster_effect(points, mult, hand, gameState, handInfo) {
-    let newPoints = points;
+    let pointsAdded = 0;
     hand.forEach(card => {
         if (card.rank === 'A') {
-            newPoints += 10;
+            pointsAdded += 10;
         }
     });
-    return { points: newPoints, mult: mult };
+    return { points: points + pointsAdded, mult: mult, message: `+${pointsAdded} points!` };
 }

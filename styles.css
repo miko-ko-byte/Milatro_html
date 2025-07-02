@@ -579,7 +579,6 @@ body {
 }
 
 .btn-sort {
-    width: 50px;
     height: 50px;
     border: none;
     border-radius: 8px;
@@ -804,7 +803,7 @@ body {
     bottom: 20px;
     opacity: 0.6;
     margin-top: 0;
-    animation: blink 1s infinite alternate;
+    animation: blink 0.3s infinite alternate;
     z-index: 1200;
 }
 
@@ -1923,6 +1922,94 @@ button {
 
 .btn-sell-joker:active {
     transform: translateY(0);
+}
+
+.joker-effect-animation {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 12px;
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+    background: #222;
+    /* fallback */
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: all 1s ease-out;
+    z-index: 1001;
+    pointer-events: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.joker-points-animation {
+    background: #3498db;
+    color: #fff;
+}
+
+.joker-mult-animation {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.joker-message-animation {
+    background: #ff9800;
+    color: #fff;
+}
+
+.card-message-animation {
+    position: absolute;
+    font-size: 18px;
+    font-weight: bold;
+    color: #f39c12; /* Orange for messages */
+    opacity: 0;
+    transition: all 1s ease-out;
+    z-index: 1100;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.recovery-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.recovery-menu-container {
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.recovery-menu h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #4ecdc4;
+}
+
+.recovery-menu p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.recovery-menu .btn {
+    margin: 10px;
 }
 
 /* Collections menu */

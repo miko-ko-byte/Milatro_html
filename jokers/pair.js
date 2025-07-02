@@ -1,8 +1,8 @@
 
 function phantom_pair_effect(points, mult, hand, gameState, handInfo) {
-    let newMult = mult;
+    let multAdded = 0;
     if (handInfo.name === 'Pair') {
-        newMult += 2;
+        multAdded = 2;
     }
-    return { points: points, mult: newMult };
+    return { points: points, mult: mult + multAdded, message: `+${multAdded} mult!` };
 }

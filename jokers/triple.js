@@ -1,8 +1,8 @@
 
-function phantom_trio_effect(points, mult, hand, gameState, handInfo) {
-    let newMult = mult;
+function phantom_trio(points, mult, hand, gameState, handInfo) {
+    let multAdded = 0;
     if (handInfo.name === 'Two Pair') {
-        newMult *= 2;
+        multAdded = mult; // Double the current mult
     }
-    return { points: points, mult: newMult };
+    return { points: points, mult: mult + multAdded, message: `x2 mult!` };
 }

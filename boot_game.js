@@ -143,60 +143,98 @@ function updateSelection() {
     }
 }
 
-async function playHand() {
+async function animateJokerEffect(jokerElement, value, type) {
+    const jokerRect = jokerElement.getBoundingClientRect();
+    const effectEl = document.createElement('div');
+    effectEl.textContent = type === 'mult' ? `x${value}` : `+${value}`;
     
-    console.log("[boot_game.js] playHand function called");
-    if (gameState.selectedCards.length === 0) return;
-    console.log("[boot_game.js] --- Starting playHand sequence ---");
+    let colorClass = '';
+    if (type === 'mult') {
+        colorClass = 'joker-mult-animation';
+    } else if (type === 'points') {
+        colorClass = 'joker-points-animation';
+    }
 
+    effectEl.className = `joker-effect-animation ${colorClass}`;
+    effectEl.style.left = `${jokerRect.left + jokerRect.width / 2}px`;
+    effectEl.style.top = `${jokerRect.top}px`;
+    document.body.appendChild(effectEl);
+
+    requestAnimationFrame(() => {
+        effectEl.style.opacity = '1';
+        effectEl.style.transform = 'translateY(-20px)';
+    });
+
+    await sleep(1000 * gameState.animationSpeed);
+    effectEl.remove();
+}
+
+async function animateCardMessage(cardElement, message) {
+    const cardRect = cardElement.getBoundingClientRect();
+
+    const messageEl = document.createElement('div');
+    messageEl.textContent = message;
+    messageEl.className = 'card-message-animation joker-message-animation';
+    messageEl.style.left = `${cardRect.left + cardRect.width / 2}px`;
+    messageEl.style.top = `${cardRect.top}px`;
+    document.body.appendChild(messageEl);
+
+    requestAnimationFrame(() => {
+        messageEl.style.opacity = '1';
+        messageEl.style.transform = 'translateY(-20px)';
+    });
+
+    await sleep(1000 * gameState.animationSpeed);
+    messageEl.remove();
+}
+
+async function animateScoreUpdate(startScore, endScore) {
+    const scoreElement = document.getElementById('score');
+    const duration = 1000 * gameState.animationSpeed;
+    const frameDuration = 1000 / 60; // 60fps
+    const totalFrames = Math.round(duration / frameDuration);
+    const scoreIncrement = (endScore - startScore) / totalFrames;
+
+    for (let i = 0; i < totalFrames; i++) {
+        startScore += scoreIncrement;
+        scoreElement.textContent = Math.round(startScore);
+        await sleep(frameDuration);
+    }
+
+    scoreElement.textContent = endScore;
+}
+
+async function playHand() {
+    console.log("[boot_game.js] playHand function called. Selected cards:", gameState.selectedCards, "Hand:", gameState.hand);
+    if (gameState.selectedCards.length === 0) {
+        console.log("[boot_game.js] playHand aborted: No cards selected.");
+        return;
+    }
+    console.log("[boot_game.js] --- Starting playHand sequence ---");
     document.getElementById('play-btn').disabled = true;
     document.getElementById('discard-btn').disabled = true;
+
+    gameState.handsLeft--;
+    console.log(`[boot_game.js] Hands left after play: ${gameState.handsLeft}`);
+    updateUI();
+    await sleep(200 * gameState.animationSpeed);
 
     const selectedHandCards = gameState.selectedCards
         .map(i => gameState.hand[i])
         .filter(card => card !== undefined);
+    
+    if (!Array.isArray(selectedHandCards)) {
+        console.error("[boot_game.js] selectedHandCards is not an array:", selectedHandCards);
+        return;
+    }
+
+    console.log("[boot_game.js] Selected hand cards for play:", selectedHandCards);
 
     let handResult = analyzePokerHand(selectedHandCards);
-    console.log("[boot_game.js] Hand result before jokers:", handResult);
+    let currentPoints = 0;
+    let currentMult = handResult.mult;
 
-    // Aplicar efectos de los jokers
-    gameState.jokersOwned.forEach((joker, index) => {
-        if (joker && joker.effect) {
-            console.log(`[boot_game.js] Checking joker: ${joker.name}`);
-            // The joker effect function receives the current points, multiplier, the hand, the game state, and hand info
-            let mod = joker.effect(handResult.points, handResult.mult, selectedHandCards, gameState, handResult);
-            if (mod) {
-                // The joker returns the new total points and mult, not the delta
-                handResult.points = mod.points;
-                handResult.mult = mod.mult;
-                console.log(`[boot_game.js] Joker '${joker.name}' applied. New points: ${handResult.points}, New mult: ${handResult.mult}`);
-            } else {
-                console.log(`[boot_game.js] Joker '${joker.name}' did not activate (condition not met).`);
-            }
-
-            // Apply sub-effect if present
-            if (joker.subEffect && joker.subEffect.effect) {
-                console.log(`[boot_game.js] Checking sub-effect: ${joker.subEffect.name} for joker: ${joker.name}`);
-                const subMod = joker.subEffect.effect(handResult.points, handResult.mult, gameState);
-                if (subMod) {
-                    handResult.points = subMod.points || handResult.points;
-                    handResult.mult = subMod.mult || handResult.mult;
-                    console.log(`[boot_game.js] Sub-effect '${joker.subEffect.name}' applied: points=${handResult.points}, mult=${handResult.mult}`);
-                } else {
-                    console.log(`[boot_game.js] Sub-effect '${joker.subEffect.name}' did not activate (e.g., glass broke).`);
-                }
-            }
-        } else {
-            console.log(`[boot_game.js] Skipping joker at index ${index} because it has no .effect function.`);
-        }
-    });
-    const totalScore = handResult.points * handResult.mult;
-    console.log(`[boot_game.js] Final score for this hand: ${handResult.points} * ${handResult.mult} = ${totalScore}`);
-
-    gameState.score += totalScore; // Actualización correcta del puntaje
-    updateUI()
-    console.log("[boot_game.js] Updated gameState.score:", gameState.score);
-    gameState.handsLeft--;
+    console.log(`[boot_game.js] Hand analysis: ${handResult.name}, Points: ${handResult.points}, Multiplier: ${handResult.mult}`);
 
     if (gameState.animationSpeed > 0) {
         const handElement = document.getElementById('hand');
@@ -204,19 +242,102 @@ async function playHand() {
         const selectedIndexes = new Set(gameState.selectedCards);
         const selectedElements = allCardElements.filter(el => selectedIndexes.has(parseInt(el.dataset.index)));
         
-        await animateCardScores(selectedElements, selectedHandCards, gameState.animationSpeed);
-
-        showNotification(`${handResult.name}! (+${totalScore} Puntos)`, 1500 * gameState.animationSpeed);
-        await sleep(1500 * gameState.animationSpeed);
-        
-        selectedElements.forEach(el => el.classList.add('card-fade-out'));
-        await sleep(500 * gameState.animationSpeed);
+        for (let i = 0; i < selectedElements.length; i++) {
+            const cardEl = selectedElements[i];
+            const cardValue = rankValues[selectedHandCards[i].rank];
+            console.log(`[boot_game.js] Animating card at index ${gameState.selectedCards[i]} (${selectedHandCards[i].rank}${selectedHandCards[i].suit}), Value: ${cardValue}`);
+            await animateCardScores([cardEl], [selectedHandCards[i]], gameState.animationSpeed);
+            currentPoints += cardValue;
+            document.getElementById('hand-score-points').textContent = currentPoints;
+            console.log(`[boot_game.js] Accumulated points after card ${i}: ${currentPoints}`);
+        }
+    } else {
+        currentPoints = handResult.points;
+        console.log(`[boot_game.js] Animation skipped. Using handResult.points: ${currentPoints}`);
     }
+    console.log(`[boot_game.js] Card animations finished. Total points before jokers: ${currentPoints}`);
 
-    // Remover cartas jugadas
+    await sleep(200 * gameState.animationSpeed);
+
+    console.log("[boot_game.js] Starting joker effects. Jokers owned:", gameState.jokersOwned.map(j => j && j.name));
+    for (const joker of gameState.jokersOwned) {
+        if (joker && joker.effect) {
+            console.log(`[boot_game.js] Triggering joker effect for: ${joker.name}`);
+            const jokerElement = document.querySelector(`.joker-card[data-index="${gameState.jokersOwned.indexOf(joker)}"]`);
+            let effectResult = joker.effect(currentPoints, currentMult, selectedHandCards, gameState, handResult);
+
+            if (effectResult && effectResult.points !== undefined && effectResult.mult !== undefined) {
+                const pointsAdded = effectResult.points - currentPoints;
+                const multAdded = effectResult.mult - currentMult;
+
+                if (pointsAdded > 0) {
+                    console.log(`[boot_game.js] Joker '${joker.name}' added pointspollution: +${pointsAdded}`);
+                    await animateJokerEffect(jokerElement, pointsAdded, 'points');
+                }
+                if (multAdded > 0) {
+                    console.log(`[boot_game.js] Joker '${joker.name}' added multiplier: x${multAdded}`);
+                    await animateJokerEffect(jokerElement, multAdded, 'mult');
+                }
+
+                currentPoints = effectResult.points;
+                currentMult = effectResult.mult;
+
+                if (effectResult.message) {
+                    console.log(`[boot_game.js] Joker '${joker.name}' message: ${effectResult.message}`);
+                    await animateCardMessage(jokerElement, effectResult.message);
+                }
+
+                // Apply sub-effect if it exists
+                if (joker.subEffect && joker.subEffect.effect) {
+                    console.log(`[boot_game.js] Applying sub-effect for ${joker.name}: ${joker.subEffect.name}`);
+                    const subEffectResult = joker.subEffect.effect(currentPoints, currentMult, gameState);
+                    if (subEffectResult === null) {
+                        console.log(`[boot_game.js] Sub-effect '${joker.subEffect.name}' broke for ${joker.name}`);
+                        gameState.jokersOwned.splice(gameState.jokersOwned.indexOf(joker), 1); // Remove broken joker
+                        await animateCardMessage(jokerElement, `${joker.subEffect.name} se rompió!`);
+                        updateUI(); // Update UI after joker removal
+                    } else {
+                        const pointsAdded = subEffectResult.points - currentPoints;
+                        const multAdded = subEffectResult.mult - currentMult;
+                        if (pointsAdded > 0) {
+                            console.log(`[boot_game.js] Sub-effect '${joker.subEffect.name}' added points: +${pointsAdded}`);
+                            await animateJokerEffect(jokerElement, pointsAdded, 'points');
+                        }
+                        if (multAdded > 0) {
+                            console.log(`[boot_game.js] Sub-effect '${joker.subEffect.name}' added multiplier: x${multAdded}`);
+                            await animateJokerEffect(jokerElement, multAdded, 'mult');
+                        }
+                        currentPoints = subEffectResult.points;
+                        currentMult = subEffectResult.mult;
+                    }
+                }
+                await sleep(200 * gameState.animationSpeed);
+            } else {
+                console.log(`[boot_game.js] Joker '${joker.name}' had no effect or invalid effect result.`);
+            }
+        } else {
+            if (joker) {
+                console.log(`[boot_game.js] Joker '${joker.name}' has no effect function.`);
+            }
+        }
+    }
+    console.log(`[boot_game.js] Joker effects finished. Final points: ${currentPoints}, Final multiplier: ${currentMult}`);
+
+    const totalScore = currentPoints * currentMult;
+    const currentTotalScore = gameState.score;
+    console.log(`[boot_game.js] Calculating total score: ${currentPoints} * ${currentMult} = ${totalScore}. Previous score: ${currentTotalScore}`);
+    await animateScoreUpdate(currentTotalScore, currentTotalScore + totalScore);
+    gameState.score += totalScore;
+
+    updateUI();
+    console.log(`[boot_game.js] Updated gameState.score: ${gameState.score}`);
+
+    // Remove played cards
     gameState.selectedCards.sort((a, b) => b - a);
+    console.log("[boot_game.js] Removing played cards at indexes:", gameState.selectedCards);
     gameState.selectedCards.forEach(index => {
-        gameState.hand.splice(index, 1);
+        const removed = gameState.hand.splice(index, 1);
+        console.log(`[boot_game.js] Removed card at index ${index}:`, removed);
     });
     gameState.selectedCards = [];
 
@@ -224,12 +345,15 @@ async function playHand() {
     dealHand(false);
 
     if (gameState.score >= gameState.targetScore) {
+        console.log("[boot_game.js] Target score reached or exceeded. Showing notification and next round menu.");
         showNotification("¡Ciega superada!", 1500 * gameState.animationSpeed);
         await sleep(1500 * gameState.animationSpeed);
         nextRoundMenu();
     } else if (gameState.handsLeft <= 0) {
+        console.log("[boot_game.js] No hands left. Game over.");
         gameOver(false);
     } else {
+        console.log("[boot_game.js] Hand played. Updating UI for next turn.");
         updateUI();
     }
 }
@@ -417,9 +541,8 @@ function gameOver(won) {
     }
 }
 
-
 async function animateCardScores(cardElements, cardsData, animationSpeed) {
-    const scoreAnimations = [];
+    let totalAnimatedPoints = 0;
     for (let i = 0; i < cardElements.length; i++) {
         const cardEl = cardElements[i];
         const cardData = cardsData[i];
@@ -436,25 +559,25 @@ async function animateCardScores(cardElements, cardsData, animationSpeed) {
         scoreEl.style.transform = 'translate(-50%, -50%) rotate(0deg) scale(0)';
         scoreEl.style.transition = `all ${0.6 * animationSpeed}s ease-out`;
         document.body.appendChild(scoreEl);
-        scoreAnimations.push(scoreEl);
 
         // Animate in
         requestAnimationFrame(() => {
             scoreEl.style.opacity = '1';
             scoreEl.style.transform = 'translate(-50%, -150%) rotate(360deg) scale(1)';
         });
-    }
 
-    await sleep(600 * animationSpeed); // Wait for the animation to go up
+        await sleep(600 * animationSpeed); // Wait for the animation to go up
 
-    // Animate out
-    scoreAnimations.forEach(scoreEl => {
+        // Animate out
         scoreEl.style.transition = `all ${0.4 * animationSpeed}s ease-in`;
         scoreEl.style.opacity = '0';
         scoreEl.style.transform = 'translate(-50%, -50%) rotate(720deg) scale(0)';
-    });
 
-    await sleep(400 * animationSpeed); // Wait for the animation to go back and fade out
+        await sleep(400 * animationSpeed); // Wait for the animation to go back and fade out
 
-    scoreAnimations.forEach(scoreEl => scoreEl.remove());
+        scoreEl.remove();
+        totalAnimatedPoints += cardValue; // Accumulate points
+        document.getElementById('hand-score-points').textContent = totalAnimatedPoints; // Update hand score points during animation
+    }
+    return totalAnimatedPoints;
 }

@@ -1,18 +1,301 @@
-boot_menu.js:1 [boot_menu.js] boot_menu.js loaded
+[boot_menu.js] boot_menu.js loaded
 boot_menu.js:2 [boot_menu.js] Starting boot menu...
-boot_menu.js:876 [boot_menu.js] Initial UI setup complete. Only main boot menu visible.
-boot_menu.js:885 [boot_menu.js] Intro logo displayed. Waiting for user to enter main menu.
-boot_menu.js:317 [boot_menu.js] Setting background: main
-boot_menu.js:989 [boot_menu.js] Core game event listeners attached.
-boot_menu.js:893 [boot_menu.js] Entered main menu from intro logo.
-boot_menu.js:940 [boot_menu.js] jokers encontrados cargados!
-boot_menu.js:817 [boot_menu.js] Showing start game menu.
-boot_menu.js:503 [boot_menu.js] Score updated in UI: 0
-boot_menu.js:529 [boot_menu.js] Deck count updated in UI: 0
-boot_menu.js:532 [boot_menu.js] UI updated with current game state.
-boot_menu.js:550 [boot_menu.js] Jokers rendered: 
-[]
-boot_menu.js:654 [boot_menu.js] Returned to main boot menu. Game and shop panels hidden.
-collections_menu.js:26 Uncaught TypeError: Cannot read properties of null (reading 'style')
-switchCollectionSection	@	collections_menu.js:26
-onclick	@	index.html:124
+boot_menu.js:898 [boot_menu.js] Initial UI setup complete. Only main boot menu visible.
+boot_menu.js:907 [boot_menu.js] Intro logo displayed. Waiting for user to enter main menu.
+boot_menu.js:318 [boot_menu.js] Setting background: main
+boot_menu.js:1072 [boot_menu.js] Core game event listeners attached.
+boot_menu.js:912 [boot_menu.js] All resources finished loading (window 'load' event).
+boot_menu.js:945 [boot_menu.js] Entered main menu from intro logo.
+boot_menu.js:983 [boot_menu.js] Valid recovery found! Score: 297, Round: 2.
+boot_menu.js:1007 [boot_menu.js] jokers encontrados cargados!
+boot_menu.js:945 [boot_menu.js] Entered main menu from intro logo.
+boot_menu.js:983 [boot_menu.js] Valid recovery found! Score: 297, Round: 2.
+boot_menu.js:1007 [boot_menu.js] jokers encontrados cargados!
+boot_menu.js:930 main menu!
+recovery.js:19 Game state loaded from recovery: {score: 297, round: 2, handsLeft: 1, discardsLeft: 1, targetScore: 300, …}
+VM15930 boot_game.js:1 [boot_game.js] boot_game.js loaded
+recovery.js:27 [recovery.js] boot_game.js loaded, calling startingGame()...
+boot_menu.js:485 [boot_menu.js] Shop closed, setting game background.
+boot_menu.js:486 [boot_menu.js] Initializing game UI with state: {score: 297, round: 2, handsLeft: 1, discardsLeft: 1, targetScore: 300, …}
+boot_menu.js:494 [boot_menu.js] Boot menu and shop menu hidden, game panels shown.
+VM15930 boot_game.js:10 [boot_game.js] Initializing game...
+VM15930 boot_game.js:45 [boot_game.js] Deck created: 52 cards
+VM15930 boot_game.js:53 [boot_game.js] Deck shuffled
+VM15930 boot_game.js:62 [boot_game.js] Dealing 8 cards. Current hand size: 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♣ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♠ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 8♦ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♥ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♦ at index 6
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: J♦ at index 7
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 8
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 297
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 44
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: ['¡VAMOS A APOSTAR!']
+VM15930 boot_game.js:411 [boot_game.js] Sorting hand by pairs
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: J♦ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♠ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♥ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 8♦ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♦ at index 6
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♣ at index 7
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 8
+VM15930 boot_game.js:73 [boot_game.js] Dealt 8 cards. New hand size: 8
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 297
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 44
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: ['¡VAMOS A APOSTAR!']
+VM15930 boot_game.js:90 [boot_game.js] Card clicked at index: 1
+VM15930 boot_game.js:116 [boot_game.js] Toggling card selection at index: 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: J♦ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♠ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♥ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 8♦ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♦ at index 6
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♣ at index 7
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 8
+VM15930 boot_game.js:90 [boot_game.js] Card clicked at index: 2
+VM15930 boot_game.js:116 [boot_game.js] Toggling card selection at index: 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: J♦ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♠ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♥ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 8♦ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♦ at index 6
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♣ at index 7
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 8
+VM15930 boot_game.js:90 [boot_game.js] Card clicked at index: 3
+VM15930 boot_game.js:116 [boot_game.js] Toggling card selection at index: 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: J♦ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♠ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 10♥ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 8♦ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♦ at index 6
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♣ at index 7
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 8
+boot_menu.js:1041 [boot_menu.js] Play Hand button clicked
+VM15930 boot_game.js:208 [boot_game.js] playHand function called. Selected cards: (3) [1, 2, 3] Hand: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:213 [boot_game.js] --- Starting playHand sequence ---
+VM15930 boot_game.js:218 [boot_game.js] Hands left after play: 0
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 297
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 44
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: ['¡VAMOS A APOSTAR!']
+VM15930 boot_game.js:226 [boot_game.js] Selected hand cards for play: (3) [{…}, {…}, {…}]
+VM15930 boot_game.js:232 [boot_game.js] Hand analysis: Trío, Points: 30, Multiplier: 3
+VM15930 boot_game.js:243 [boot_game.js] Animating card at index 1 (10♦), Value: 10
+VM15930 boot_game.js:247 [boot_game.js] Accumulated points after card 0: 10
+VM15930 boot_game.js:243 [boot_game.js] Animating card at index 2 (10♠), Value: 10
+VM15930 boot_game.js:247 [boot_game.js] Accumulated points after card 1: 20
+VM15930 boot_game.js:243 [boot_game.js] Animating card at index 3 (10♥), Value: 10
+VM15930 boot_game.js:247 [boot_game.js] Accumulated points after card 2: 30
+VM15930 boot_game.js:253 [boot_game.js] Card animations finished. Total points before jokers: 30
+VM15930 boot_game.js:257 [boot_game.js] Starting joker effects. Jokers owned: ['¡VAMOS A APOSTAR!']
+VM15930 boot_game.js:290 [boot_game.js] Joker '¡VAMOS A APOSTAR!' has no effect function.
+VM15930 boot_game.js:294 [boot_game.js] Joker effects finished. Final points: 30, Final multiplier: 3
+VM15930 boot_game.js:298 [boot_game.js] Calculating total score: 30 * 3 = 90. Previous score: 297
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 387
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 44
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: ['¡VAMOS A APOSTAR!']
+VM15930 boot_game.js:303 [boot_game.js] Updated gameState.score: 387
+VM15930 boot_game.js:307 [boot_game.js] Removing played cards at indexes: (3) [3, 2, 1]
+VM15930 boot_game.js:310 [boot_game.js] Removed card at index 3: [{…}]
+VM15930 boot_game.js:310 [boot_game.js] Removed card at index 2: [{…}]
+VM15930 boot_game.js:310 [boot_game.js] Removed card at index 1: [{…}]
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: J♦ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 8♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♦ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♣ at index 4
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (5) [{…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 5
+VM15930 boot_game.js:62 [boot_game.js] Dealing 3 cards. Current hand size: 5
+VM15930 boot_game.js:318 [boot_game.js] Target score reached or exceeded. Showing notification and next round menu.
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: J♦ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 8♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♦ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♣ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♠ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 6♠ at index 6
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 8♠ at index 7
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 8
+VM15930 boot_game.js:391 [boot_game.js] animateDeal: Animation completed
+boot_menu.js:289 [boot_menu.js] Assigned sub-effect Blessed to joker En mi propio juego
+boot_menu.js:289 [boot_menu.js] Assigned sub-effect Glass to joker Cara feliz
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 0
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 41
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: ['¡VAMOS A APOSTAR!']
+boot_menu.js:643 [boot_menu.js] Shop jokers rendered: (2) ['En mi propio juego', 'Cara feliz']
+boot_menu.js:376 [boot_menu.js] Preview updated for joker: En mi propio juego Sub-effect: Blessed
+boot_menu.js:692 [boot_menu.js] Shop opened for round: 3
+boot_menu.js:616 [boot_menu.js] Shop joker clicked: Cara feliz
+boot_menu.js:376 [boot_menu.js] Preview updated for joker: Cara feliz Sub-effect: Glass
+gameState
+{score: 0, round: 3, handsLeft: 4, discardsLeft: 1, targetScore: 300, …}animationSpeed: 1completionPercentage: 0deck: (41) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]deckType: "standard"difficulty: "easy"discardsLeft: 1hand: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]handsLeft: 4jokerCollection: "none"jokersOwned: [{…}]money: 30nextBlindReward: 10nextBlindTargetScore: 300organize: "pairs"ownedBlackCards: []recovery: trueround: 3score: 0seenJokers: (13) ['wrathful_joker', 'double_it_and_give_it_to_the_mult', 'phantom_pair', 'ace_booster', 'phantom_trio', 'bbw', 'gambling', 'supernoba', 'in_my_own_game', 'greedy_joker', 'lusty_joker', 'joker', 'gluttonous_joker']seenSubEffects: (6) ['foil', 'blessed', 'holographic', 'polychrome', 'golded', 'glass']selectedCards: []shopJokers: (2) [{…}, {…}]startTime: Wed Jul 02 2025 04:50:59 GMT-0400 (hora estándar del Atlántico) {}targetScore: 300timeTwisterUsed: falsetimesBooted: 0[[Prototype]]: Object
+boot_menu.js:616 [boot_menu.js] Shop joker clicked: Cara feliz
+boot_menu.js:376 [boot_menu.js] Preview updated for joker: Cara feliz Sub-effect: Glass
+boot_menu.js:616 [boot_menu.js] Shop joker clicked: En mi propio juego
+boot_menu.js:376 [boot_menu.js] Preview updated for joker: En mi propio juego Sub-effect: Blessed
+boot_menu.js:616 [boot_menu.js] Shop joker clicked: Cara feliz
+boot_menu.js:376 [boot_menu.js] Preview updated for joker: Cara feliz Sub-effect: Glass
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 0
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 41
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: ['¡VAMOS A APOSTAR!']
+boot_menu.js:643 [boot_menu.js] Shop jokers rendered: (2) ['En mi propio juego', 'Cara feliz']
+boot_menu.js:376 [boot_menu.js] Preview updated for joker: En mi propio juego Sub-effect: Blessed
+boot_menu.js:737 [boot_menu.js] Joker purchased and effect applied: {id: 'double_it_and_give_it_to_the_mult', name: 'Cara feliz', rarity: 'common', description: 'Cuando se puntúa una figura (K, Q, J), añade el do… del valor de la primera figura al multiplicador.', cost: 13, …}
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 0
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 41
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: (2) ['¡VAMOS A APOSTAR!', 'Cara feliz']
+boot_menu.js:643 [boot_menu.js] Shop jokers rendered: (2) ['En mi propio juego', 'Cara feliz']
+boot_menu.js:376 [boot_menu.js] Preview updated for joker: En mi propio juego Sub-effect: Blessed
+boot_menu.js:376 [boot_menu.js] Preview updated for joker: Cara feliz Sub-effect: Glass
+recovery.js:19 Game state loaded from recovery: {score: 0, round: 3, handsLeft: 4, discardsLeft: 1, targetScore: 300, …}
+boot_game.js:1 Uncaught SyntaxError: Identifier 'rankValues' has already been declaredUnderstand this error
+recovery.js:27 [recovery.js] boot_game.js loaded, calling startingGame()...
+boot_menu.js:485 [boot_menu.js] Shop closed, setting game background.
+boot_menu.js:486 [boot_menu.js] Initializing game UI with state: {score: 0, round: 3, handsLeft: 4, discardsLeft: 1, targetScore: 300, …}
+boot_menu.js:494 [boot_menu.js] Boot menu and shop menu hidden, game panels shown.
+VM15930 boot_game.js:10 [boot_game.js] Initializing game...
+VM15930 boot_game.js:45 [boot_game.js] Deck created: 52 cards
+VM15930 boot_game.js:53 [boot_game.js] Deck shuffled
+VM15930 boot_game.js:62 [boot_game.js] Dealing 8 cards. Current hand size: 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♥ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: J♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♠ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♥ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♦ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 3♥ at index 6
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: Q♥ at index 7
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 8
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 0
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 44
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: (2) ['¡VAMOS A APOSTAR!', 'Cara feliz']
+VM15930 boot_game.js:411 [boot_game.js] Sorting hand by pairs
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♥ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: Q♥ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: J♦ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 3♥ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♠ at index 6
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♥ at index 7
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 8
+VM15930 boot_game.js:73 [boot_game.js] Dealt 8 cards. New hand size: 8
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 0
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 44
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: (2) ['¡VAMOS A APOSTAR!', 'Cara feliz']
+boot_menu.js:550 [boot_menu.js] In-game joker clicked: Cara feliz
+boot_menu.js:587 [boot_menu.js] Joker info modal shown for: Cara feliz In shop: false
+VM15930 boot_game.js:90 [boot_game.js] Card clicked at index: 3
+VM15930 boot_game.js:116 [boot_game.js] Toggling card selection at index: 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♥ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: Q♥ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: J♦ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 3♥ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♠ at index 6
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♥ at index 7
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 8
+boot_menu.js:1041 [boot_menu.js] Play Hand button clicked
+VM15930 boot_game.js:208 [boot_game.js] playHand function called. Selected cards: [3] Hand: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:213 [boot_game.js] --- Starting playHand sequence ---
+VM15930 boot_game.js:218 [boot_game.js] Hands left after play: 3
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 0
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 44
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: (2) ['¡VAMOS A APOSTAR!', 'Cara feliz']
+VM15930 boot_game.js:226 [boot_game.js] Selected hand cards for play: [{…}]
+VM15930 boot_game.js:232 [boot_game.js] Hand analysis: Color, Points: 35, Multiplier: 4
+VM15930 boot_game.js:243 [boot_game.js] Animating card at index 3 (J♦), Value: 11
+VM15930 boot_game.js:247 [boot_game.js] Accumulated points after card 0: 11
+VM15930 boot_game.js:253 [boot_game.js] Card animations finished. Total points before jokers: 11
+VM15930 boot_game.js:257 [boot_game.js] Starting joker effects. Jokers owned: (2) ['¡VAMOS A APOSTAR!', 'Cara feliz']
+VM15930 boot_game.js:290 [boot_game.js] Joker '¡VAMOS A APOSTAR!' has no effect function.
+VM15930 boot_game.js:290 [boot_game.js] Joker 'Cara feliz' has no effect function.
+VM15930 boot_game.js:294 [boot_game.js] Joker effects finished. Final points: 11, Final multiplier: 4
+VM15930 boot_game.js:298 [boot_game.js] Calculating total score: 11 * 4 = 44. Previous score: 0
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 44
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 44
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: (2) ['¡VAMOS A APOSTAR!', 'Cara feliz']
+VM15930 boot_game.js:303 [boot_game.js] Updated gameState.score: 44
+VM15930 boot_game.js:307 [boot_game.js] Removing played cards at indexes: [3]
+VM15930 boot_game.js:310 [boot_game.js] Removed card at index 3: [{…}]
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♥ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: Q♥ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 3♥ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♠ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♥ at index 6
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (7) [{…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 7
+VM15930 boot_game.js:62 [boot_game.js] Dealing 1 cards. Current hand size: 7
+VM15930 boot_game.js:326 [boot_game.js] Hand played. Updating UI for next turn.
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 44
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 43
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: (2) ['¡VAMOS A APOSTAR!', 'Cara feliz']
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♥ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: Q♥ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 3♥ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♠ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♥ at index 6
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 5♥ at index 7
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 8
+VM15930 boot_game.js:391 [boot_game.js] animateDeal: Animation completed
+boot_menu.js:507 [boot_menu.js] Score updated in UI: 44
+boot_menu.js:534 [boot_menu.js] Deck count updated in UI: 43
+boot_menu.js:537 [boot_menu.js] UI updated with current game state.
+boot_menu.js:555 [boot_menu.js] Jokers rendered: (2) ['¡VAMOS A APOSTAR!', 'Cara feliz']
+VM15930 boot_game.js:411 [boot_game.js] Sorting hand by pairs
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♥ at index 0
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: A♦ at index 1
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: Q♥ at index 2
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 5♥ at index 3
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 4♥ at index 4
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 3♥ at index 5
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♠ at index 6
+VM15930 boot_game.js:109 [boot_game.js] Added card to DOM: 2♥ at index 7
+VM15930 boot_game.js:111 [boot_game.js] Hand rendered: (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+VM15930 boot_game.js:112 [boot_game.js] DOM check: #hand children count: 8
+gambling_effect()
+{points: undefined, mult: NaN, message: '+63 mult!'}
+double_it_and_give_it_to_the_mult_effect()
+doble_it_and_give_it_to_the_mult.js:5 Uncaught TypeError: hand is not iterable
+    at double_it_and_give_it_to_the_mult_effect (doble_it_and_give_it_to_the_mult.js:5:24)
+    at <anonymous>:1:1
+double_it_and_give_it_to_the_mult_effect @ doble_it_and_give_it_to_the_mult.js:5
+(anonymous) @ VM16137:1Understand this error

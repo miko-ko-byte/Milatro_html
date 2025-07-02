@@ -1,8 +1,8 @@
 
 function flush_master_effect(points, mult, hand, gameState, handInfo) {
-    let newMult = mult;
+    let multAdded = 0;
     if (handInfo.name === 'Flush') {
-        newMult *= 2;
+        multAdded = mult;
     }
-    return { points: points, mult: newMult };
+    return { points: points, mult: mult + multAdded, message: `x2 mult!` };
 }
