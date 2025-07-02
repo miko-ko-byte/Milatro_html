@@ -17,5 +17,17 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],"screenshots": [    
+   {
+
+     "src": "images/logo.png",
+      "sizes": "640x320",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Application"
+    },
+    {
+  "description": "Milatro"
+}
+ ]
 }
