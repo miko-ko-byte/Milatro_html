@@ -1,0 +1,6 @@
+@echo off
+echo Starting web server on http://localhost:8000...
+start /b python -m http.server 8000
+echo Opening browser...
+start http://localhost:8000
+exit

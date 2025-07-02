@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles/animations.css">
     <link rel="stylesheet" href="styles/boot.css">
     <link rel="stylesheet" href="styles/collections.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <div id="intro-logo" class="intro-logo">
@@ -26,6 +27,7 @@
         <div class="main-buttons">
             <button class="btn-play" onclick="showStartGameMenu()">Jugar</button>
             <button class="btn-collection" onclick="showCollectionsMenu()">Colección</button>
+            <button id="install-button" class="btn" style="display: none;">Install</button>
         </div>
         <div class="game-version">v1.0.0</div>
     </div>
@@ -148,5 +150,27 @@
     <script src="music_manager.js"></script>
     <script src="boot_menu.js"></script>
     <script src="collections_menu.js"></script>
+    <script src="installer.js"></script>
+    <script src="meta_manager.js"></script>
+    <script src="updater.js"></script>
+    <script src="debug.js"></script>
+    <script src="analytics.js"></script>
+    <script src="PWA.js"></script>
+    <script src="push_notifications.js"></script>
+    <script src="share.js"></script>
+    <script src="shortcuts.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
