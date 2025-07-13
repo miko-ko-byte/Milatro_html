@@ -1,9 +1,6 @@
 window.double_it_and_give_it_to_the_mult_effect = function(points, mult, hand, gameState, handInfo) {
     console.log("[doble_it_and_give_it_to_the_mult.js] Applying Cara feliz effect");
-    const rankValues = window.rankValues || {
-        '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10,
-        'J': 11, 'Q': 12, 'K': 13, 'A': 14
-    };
+    
     let multAdded = 0;
     const faceCards = ['J', 'Q', 'K'];
     let firstFaceCardValue = 0;

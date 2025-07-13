@@ -6,18 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Milatro - by miko</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
-    <audio id="music-main" src="music/Main Theme.mp3" loop></audio>
-    <audio id="music-shop" src="music/Shop Theme.mp3" loop></audio>
-    <audio id="music-boss" src="music/Boss Theme.mp3" loop></audio>
-    <audio id="music-arcana" src="music/Arcana Theme.mp3" loop></audio>
-    <audio id="music-celestial" src="music/Celestial Theme.mp3" loop></audio>
+    <audio id="music-main" src="music/Main Theme.mp3" loop preload="none"></audio>
+    <audio id="music-shop" src="music/Shop Theme.mp3" loop preload="none"></audio>
+    <audio id="music-boss" src="music/Boss Theme.mp3" loop preload="none"></audio>
+    <audio id="music-arcana" src="music/Arcana Theme.mp3" loop preload="none"></audio>
+    <audio id="music-celestial" src="music/Celestial Theme.mp3" loop preload="none"></audio>
+    <audio id="music-blackcard" src="music/BlackCard Theme.mp3" loop preload="none"></audio>
+    <audio id="music-miku" src="music/Main Theme miku.mp3" loop preload="auto"></audio>
     <div class="liquid-bg"></div>
 
     <div class="game-container">
+        <img src="./images/jokers/joker.png" class="loading-joker" alt="loading">
         <div class="left-panel">
             <div class="blind-panel">
                 <div class="blind-title">Ciega pequeña</div>
@@ -29,22 +31,26 @@
                 </div>
                 <div class="score-display">
                     <div class="score-label" id="score-label">Puntuación</div>
-                    <div class="score-value" id="score">0</div>
+                    <div class="score-value" id="score-final">0</div>
                 </div>
-                <div class="stats-grid">
-                    <div class="stat-box points-background">
-                        <div class="stat-label points">puntos</div>
-                        <div class="stat-value" id="hand-score-points">0</div>
-                    </div>
-                    <div class="stat-box mult-background">
-                        <div class="stat-label mult">mult</div>
-                        <div class="stat-value" id="hand-score-mult">0</div>
+                <div class="score-display">
+                    <div class="score-value" id="score">0</div>
+                    <div class="stats-grid">
+                        <div class="stat-box points-background">
+                            <div class="stat-label points">puntos</div>
+                            <div class="stat-value" id="hand-score-points">0</div>
+                            
+                        </div>
+                        <div class="stat-box mult-background">
+                            <div class="stat-label mult">mult</div>
+                            <div class="stat-value" id="hand-score-mult">0</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="control-buttons">
-                <button class="btn-small btn-info" onclick="showCombinations()">info</button>
+                <button class="btn-small btn-info" onclick="sfx('button'); showCombinations()">info</button>
             </div>
 
             <div class="stats-grid">
@@ -81,38 +87,58 @@
             <div class="hand" id="hand"></div>
 
             <div class="controls">
-                <button class="btn" id="play-btn" disabled>Jugar mano</button>
+                <button class="btn" id="play-btn" onclick="sfx('button')" disabled>Jugar mano</button>
 
                 <div class="sort-buttons">
-                    <button class="btn-sort" id="sort-types" title="Organizar por palo">tipos</button>
-                    <button class="btn-sort" id="sort-pairs" title="Organizar por pares">pares</button>
+                    <button class="btn-sort" id="sort-types" onclick="sfx('button')"
+                        title="Organizar por palo">tipos</button>
+                    <button class="btn-sort" id="sort-pairs" onclick="sfx('button')"
+                        title="Organizar por pares">pares</button>
                 </div>
 
-                <button class="btn" id="discard-btn" disabled>Descartar</button>
+                <button class="btn" id="discard-btn" onclick="sfx('button')" disabled>Descartar</button>
             </div>
+<div class="cash-out-menu" id="cash-out-menu">
+                    <div class="cash-out-info">
+                        <div class="stat-box">
+                            <div class="stat-label">Cartas</div>
+                            <div class="stat-value" id="cash-out-deck-count">52/52</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Descartes</div>
+                            <div class="stat-value" id="cash-out-discards-left">3</div>
+                        </div>
+                        <div class="stat-box money-box">
+                            <div class="stat-label">Ganancia</div>
+                            <div class="stat-value" id="cash-out-money">$1</div>
+                        </div>
+                    </div>
+                    <button class="btn" id="cash-out-btn">Cash Out</button>
+                </div>
         </div>
 
         <div class="right-panel">
-            <div class="deck-container" id="deck-container">
-                <div class="deck-card"></div>
-                <div class="deck-card"></div>
-                <div class="deck-card deck-card-image" style="background-image:url(./images/jokers/blue_deck.png)"></div>
+            <div class="deck-container" id="deck-container" onclick="showDeckModal()">
+            <div class="deck-card"></div>
+            <div class="deck-card"></div>
+            <div class="deck-card deck-card-image" style="background-image:url(./images/jokers/blue_deck.png)">
             </div>
+        </div>
             <div class="deck-info">
                 <div id="deck-count">52/52</div>
             </div>
         </div>
         <div class="blind-selection-menu" style="display: none;">
             <h2>Selecciona una ciega</h2>
-            <button class="btn btn-blind" onclick="selectBlind(1)">Ciega 1 (Fácil)</button>
-            <button class="btn btn-blind" onclick="selectBlind(2)">Ciega 2 (Media)</button>
-            <button class="btn btn-blind" onclick="selectBlind(3)">Ciega 3 (Difícil)</button>
+            <button class="btn btn-blind" onclick="sfx('button'); selectBlind(1)">Ciega 1 (Fácil)</button>
+            <button class="btn btn-blind" onclick="sfx('button'); selectBlind(2)">Ciega 2 (Media)</button>
+            <button class="btn btn-blind" onclick="sfx('button'); selectBlind(3)">Ciega 3 (Difícil)</button>
         </div>
         <div class="intro-logo" id="intro-logo" onclick="enterMainMenu()">
             <h1>ADVERTENCIA!!!</h1>
             <p>ESTO ES UNA BETA SERRADA! NO ESTA TERMINADO Y PROBABLEMENTE NUNCA LO ESTARA</p>
             <p>haga click para comenzar</p>
-            <img src="./images/jokers/joker.png" class="loading-joker" alt="loading">
+            
         </div>
         <div class="boot-menu">
             <div class="boot-menu-main">
@@ -122,53 +148,44 @@
 
                     <!-- Contenedor gris de los botones -->
                     <div class="button-container">
-                        <button class="btn btn-play" onclick="showStartGameMenu()">Play</button>
+                        <button class="btn btn-play" onclick="sfx('button'); showStartGameMenu()">Play</button>
+                        <button class="btn btn-settings" onclick="sfx('button'); showSettings()">Options</button>
                         <button class="btn btn-collection"
-                            onclick="showCollectionsMenu()">Collection</button>
-                        <button id="install-button" class="btn" style="display: none;">Install</button>
+                            onclick="sfx('button'); showCollectionsMenu()">Collections</button>
+
                     </div>
                 </div>
             </div>
             <!-- Versión del juego arriba a la derecha -->
             <div class="game-version" id="game-version">???</div>
-            <div class="boot-menu-start-game" style="display: none;">
-                <img src="./images/logo.png" class="boot-logo" alt="Milatro Logo">
-                <div class="button-container">
-                    <div>
-                        <label for="deck-type">Tipo de Baraja:</label>
-                        <select id="deck-type">
-                            <option value="standard">Estándar</option>
-                            <option value="expanded">Expandida</option>
-                            <option value="thematic">Temática</option>
-                        </select>
+            <div class="boot-menu-start-game fixed" style="display: none;">
+                <div class="collections-menu-container">
+                    <h2>Selección de Baraja</h2>
+                    <div class="deck-selection">
+                        <div class="deck-box">
+                            <img id="deck-image" src="./images/decks/blue_deck.png" alt="Selected Deck">
+                        </div>
+                        <div class="deck-controls">
+                            <button class="btn-deck-prev" onclick="sfx('button'); changeDeck('prev')">&#9664;</button>
+                            <span id="deck-name">Baraja Azul</span>
+                            <button class="btn-deck-next" onclick="sfx('button'); changeDeck('next')">&#9654;</button>
+                        </div>
                     </div>
-                    <div>
-                        <label for="difficulty">Dificultad:</label>
-                        <select id="difficulty">
-                            <option value="easy">Fácil</option>
-                            <option value="normal">Normal</option>
-                            <option value="hard">Difícil</option>
-                        </select>
+                    <div class="difficulty-selection">
+                        <h3>Dificultad</h3>
+                        <div class="difficulty-controls">
+                            <button class="btn-difficulty-prev"
+                                onclick="sfx('button'); changeDifficulty('prev')">&#9664;</button>
+                            <span id="difficulty-name">Normal</span>
+                            <button class="btn-difficulty-next"
+                                onclick="sfx('button'); changeDifficulty('next')">&#9654;</button>
+                        </div>
                     </div>
-                    <div>
-                        <label for="joker-collection">Colección de Comodines:</label>
-                        <select id="joker-collection">
-                            <option value="none">Ninguno</option>
-                            <option value="basic">Básica</option>
-                            <option value="complete">Completa</option>
-                        </select>
+                    <div class="menu-actions">
+                        <button class="btn-play" onclick="sfx('button'); startGame()">Jugar</button>
+                        <br>
+                        <button class="btn-back" onclick="sfx('button'); backToIntro()">Volver</button>
                     </div>
-                    <div>
-                        <label for="animation-speed">Velocidad de Animación:</label>
-                        <select id="animation-speed">
-                            <option value="1">Normal (1x)</option>
-                            <option value="0.5">Doble (2x)</option>
-                            <option value="0.25">Cuádruple (4x)</option>
-                            <option value="instant">Instantánea (Sin animaciones)</option>
-                        </select>
-                    </div>
-                    <button class="btn-play" onclick="prepareGame()">Iniciar</button>
-                    <button class="btn-back" onclick="goToMenu()">atras</button>
                 </div>
             </div>
         </div>
@@ -176,10 +193,14 @@
             <div class="collections-menu-container">
                 <h1>Colecciones</h1>
                 <div class="collection-nav">
-                    <button class="collection-nav-button active" data-section="sub-effects" onclick="switchCollectionSection('sub-effects')">Sub-Efectos</button>
-                    <button class="collection-nav-button" data-section="jokers" onclick="switchCollectionSection('jokers')">Jokers</button>
-                    <button class="collection-nav-button" data-section="black-cards" onclick="switchCollectionSection('black-cards')">Cartas Negras</button>
-                    <button class="collection-nav-button" data-section="stats" onclick="switchCollectionSection('stats')">Estadísticas</button>
+                    <button class="collection-nav-button active" data-section="sub-effects"
+                        onclick="sfx('button'); switchCollectionSection('sub-effects')">Sub-Efectos</button>
+                    <button class="collection-nav-button" data-section="jokers"
+                        onclick="sfx('button'); switchCollectionSection('jokers')">Jokers</button>
+                    <button class="collection-nav-button" data-section="black-cards"
+                        onclick="sfx('button'); switchCollectionSection('black-cards')">Cartas Negras</button>
+                    <button class="collection-nav-button" data-section="stats"
+                        onclick="sfx('button'); switchCollectionSection('stats')">Estadísticas</button>
                 </div>
                 <div id="collection-content" class="collection-content"></div>
                 <div id="stats-content" class="stats-content" style="display: none;">
@@ -202,7 +223,21 @@
                 </div>
                 <br>
                 <br>
-                <button class="btn-back" onclick="hideCollectionsMenu()">Volver</button>
+                <button class="btn-back" onclick="sfx('button'); hideCollectionsMenu()">Volver</button>
+            </div>
+        </div>
+        <div class="settings-menu" style="display: none;">
+            <div class="settings-menu-container">
+                <div class="collection-nav">
+                    <button class="settings-nav-button" data-section="sound"
+                        onclick="sfx('button'); switchSettingsSection('sound')">Sonido</button>
+                    <button class="settings-nav-button" data-section="graphics"
+                        onclick="sfx('button'); switchSettingsSection('graphics')">Gráficos</button>
+                    <button class="settings-nav-button" data-section="gameplay"
+                        onclick="sfx('button'); switchSettingsSection('gameplay')">Juego</button>
+                </div>
+                <div id="settings-content"></div>
+                <button class="btn-back" onclick="sfx('button'); hideSettings()">Volver y guardar</button>
             </div>
         </div>
         <div class="shop-menu" style="display: none;">
@@ -220,7 +255,7 @@
                         <div class="stat-value" id="money-store">$4</div>
                     </div>
                     <!-- Small jokers will be inserted here dynamically -->
-                    <button class="btn-play" onclick="continueGame()">Continuar</button>
+                    <button class="btn-play" onclick="sfx('button'); continueGame()">Continuar</button>
                 </div>
             </div>
 
@@ -276,7 +311,7 @@
             <div class="game-over-content">
                 <h2 id="game-result">¡Juego Terminado!</h2>
                 <div class="final-score">Puntuación Final: <span id="final-score">0</span></div>
-                <button class="btn btn-play enabled" onclick="restartGame()">Jugar de Nuevo</button>
+                <button class="btn btn-play enabled" onclick="sfx('button'); restartGame()">Jugar de Nuevo</button>
             </div>
         </div>
 
@@ -285,40 +320,24 @@
                 <h2>Recuperar partida</h2>
                 <p>se a detectado una partida sin terminar, ¿quieres continuarla?</p>
                 <div>
-                    <button class="btn btn-play" onclick="continueGame()">Continuar</button>
-                    <button class="btn btn-back" onclick="newGame()">Crear nueva</button>
+                    <button class="btn btn-play" onclick="sfx('button'); continueGame()">Continuar</button>
+                    <button class="btn btn-back" onclick="sfx('button'); newGame()">Crear nueva</button>
                 </div>
             </div>
         </div>
 
         <div class="notification" id="notification"></div>
 
-        <script src="boot_menu.js"></script>
-        <script src="music_manager.js"></script>
-        <script src="collections_menu.js"></script>
-        <script src="recovery.js"></script>
-        <script src="installer.js"></script>
-        <script src="meta_manager.js"></script>
-        <script src="updater.js"></script>
-        <script src="debug.js"></script>
-        <script src="analytics.js"></script>
-        <script src="PWA.js"></script>
-        <script src="push_notifications.js"></script>
-        <script src="share.js"></script>
-        <script src="shortcuts.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./service-worker.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('ServiceWorker registration failed: ', error);
-                    });
-            });
-        }
-    </script>
+        <div class="modal" id="deck-modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeDeckModal()">&times;</span>
+                <h2>Mazo actual</h2>
+                <div id="deck-value"></div>
+                <div id="deck-cards-container"></div>
+            </div>
+        </div>
+
+        <script src="./boot.js" defer></script>
 </body>
 
 </html>

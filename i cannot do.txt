@@ -1,0 +1,63 @@
+
+const i_cannot_do = `
+Joker Stencil: Requires access to the number of empty joker slots, which is not available in the provided gameState.
+Four Fingers: Modifies the rules for forming Flushes and Straights, which is a core game logic change and cannot be implemented as a simple joker effect.
+Mime: Requires the ability to re-trigger other card abilities, which is not supported by the current effect system.
+Credit Card: Affects the player's money, which is not part of the provided gameState.
+Ceremonial Dagger: Requires the ability to interact with other jokers and their sell values, which is not available.
+Marble Joker: Adds a card to the deck, which is a deck modification action not supported by the effect function.
+8 Ball: Creates a Tarot card, which is a card generation action not supported by the effect function.
+Dusk: Re-triggers played cards, which is not supported by the current effect system.
+Chaos the Clown: Affects shop re-rolls, which is outside the scope of the hand evaluation function.
+Delayed Gratification: Affects the player's money, which is not part of the provided gameState.
+Hack: Re-triggers played cards, which is not supported by the current effect system.
+Pareidolia: Changes how cards are classified, a core game logic change.
+Space Joker: Upgrades poker hand levels, which is a core game logic change.
+Egg: Affects sell value, which is not part of the provided gameState.
+Burglar: Modifies hands and discards, which is a core game logic change.
+DNA: Modifies the deck, a deck modification action.
+Splash: Changes scoring rules, a core game logic change.
+Sixth Sense: Creates a Spectral card, a card generation action.
+Superposition: Creates a Tarot card, a card generation action.
+To Do List: Affects player's money, which is not part of the provided gameState.
+Riff-Raff: Creates Joker cards, a card generation action.
+Shortcut: Modifies the rules for forming Straights, a core game logic change.
+Vagabond: Creates a Tarot card, a card generation action.
+Cloud 9: Affects player's money, which is not part of the provided gameState.
+Rocket: Affects player's money, which is not part of the provided gameState.
+Midas Mask: Changes card properties, a core game logic change.
+Luchador: Disables a boss blind, a core game logic change.
+Gift Card: Affects sell value, which is not part of the provided gameState.
+Turtle Bean: Modifies hand size, a core game logic change.
+Reserved Parking: Affects player's money, which is not part of the provided gameState.
+Mail-In Rebate: Affects player's money, which is not part of the provided gameState.
+To the Moon: Affects player's money, which is not part of the provided gameState.
+Hallucination: Creates a Tarot card, a card generation action.
+Juggler: Modifies hand size, a core game logic change.
+Drunkard: Modifies discards, a core game logic change.
+Golden Joker: Affects player's money, which is not part of the provided gameState.
+Diet Cola: Creates a Double Tag, a core game logic change.
+Trading Card: Affects player's money, which is not part of the provided gameState.
+Mr. Bones: Prevents death, a core game logic change.
+Sock and Buskin: Re-triggers played cards, which is not supported by the current effect system.
+Troubadour: Modifies hand size and hands per round, a core game logic change.
+Certificate: Adds a card to the hand, a card generation action.
+Smeared Joker: Modifies suit rules, a core game logic change.
+Hanging Chad: Re-triggers played cards, which is not supported by the current effect system.
+Showman: Modifies card generation rules, a core game logic change.
+Blueprint: Copies another joker's ability, which is not supported by the current effect system.
+Merry Andy: Modifies discards and hand size, a core game logic change.
+Oops! All 6s: Modifies probabilities, a core game logic change.
+Matador: Affects player's money, which is not part of the provided gameState.
+Invisible Joker: Duplicates a joker, a core game logic change.
+Brainstorm: Copies another joker's ability, which is not supported by the current effect system.
+Satellite: Affects player's money, which is not part of the provided gameState.
+Cartomancer: Creates a Tarot card, a card generation action.
+Astronomer: Affects shop prices, which is outside the scope of the hand evaluation function.
+Burnt Joker: Upgrades poker hand levels, a core game logic change.
+Canio: Requires access to destroyed cards, which is not available.
+Chicot: Disables boss blind effects, a core game logic change.
+Perkeo: Creates a consumable card, a card generation action.
+`;
+
+write_file('i cannot do.txt', i_cannot_do)

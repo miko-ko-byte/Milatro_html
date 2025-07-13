@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Music System Test</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        button {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Music System Test</h1>
+    <button onclick="startMusicSystem()">Start Music System</button>
+
+    <!-- Audio elements for musicTracks -->
+    <audio id="main" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    <audio id="track2" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
+    <audio id="track3" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"></audio>
+
+    <script>
+        // Simulate game state and settings
+        const gameState = {
+            settings: {
+                musicEnabled: true,
+                masterVolume: 100
+            }
+        };
+        
+        // Add this so fadeToTrack does not cry
+        let currentMusicKey = "main";
+        let isMusicSystemStarted = false;
+        let lastTransitionTime = 0;
+        const transitionCooldown = 2000;
+        function getMasterVolume() {
+            if (typeof gameState !== "undefined" && gameState.settings && typeof gameState.settings.masterVolume === "number") {
+                return gameState.settings.masterVolume / 100;
+            }
+            return 1;
+        }
+        // Map of music tracks
+        const musicTracks = {
+            main: document.getElementById('main'),
+            track2: document.getElementById('track2'),
+            track3: document.getElementById('track3')
+        };
+
+
+
+        // Dummy fadeToTrack implementation
+        function fadeToTrack(targetKey, duration = 2000) {
+            const now = Date.now();
+            if (targetKey === currentMusicKey && now - lastTransitionTime < transitionCooldown) return;
+            if (!musicTracks[targetKey]) return;
+
+            lastTransitionTime = now;
+            const startTime = performance.now();
+            const fromTracks = Object.entries(musicTracks).filter(([key]) => key !== targetKey);
+            const toTrack = musicTracks[targetKey];
+            const enabled = gameState.settings.musicEnabled;
+
+            function step(time) {
+                
+                var t = Math.min(1, (time - startTime) / duration);
+                const masterVolume = getMasterVolume();
+                if (t < 0) {
+                    console.warn("[music_manager.js] Warning: t is negative in fadeToTrack step:", t);
+                    t = 0
+                }
+
+                if (toTrack) toTrack.volume = enabled ? t * masterVolume : 0;
+                fromTracks.forEach(([_, audio]) => {
+                    if (audio) audio.volume = (1 - t) * masterVolume;
+                });
+
+                if (t < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    currentMusicKey = targetKey;
+                }
+            }
+
+            requestAnimationFrame(step);
+        }
+        // The provided function
+        function startMusicSystem() {
+            console.log("[music_manager.js] Starting music system...");
+            if (isMusicSystemStarted) {
+                console.log("[music_manager.js] Music system already started, skipping.");
+                return;
+            }
+            isMusicSystemStarted = true;
+
+            let validTracks = 0;
+            for (const key in musicTracks) {
+                const audio = musicTracks[key];
+                if (!audio) {
+                    console.warn(`[music_manager.js] Audio element for ${key} not found`);
+                    continue;
+                }
+                if (!audio.src || audio.src === "") {
+                    console.warn(`[music_manager.js] Audio element for ${key} has no valid source`);
+                    continue;
+                }
+                console.log(`[music_manager.js] Setting up ${key} with src: ${audio.src}`);
+                audio.loop = true;
+                audio.volume = 0;
+                audio.load(); // Precargar sin reproducir
+                validTracks++;
+            }
+
+            if (validTracks === 0) {
+                console.error("[music_manager.js] No valid audio tracks found. Music system not initialized.");
+                return;
+            }
+
+            if (gameState.settings.musicEnabled && musicTracks["main"]) {
+                console.log("[music_manager.js] Playing main track");
+                musicTracks["main"].play().catch(e => {
+                    console.warn("[music_manager.js] Failed to play main track:", e);
+                    musicTracks["main"].pause();
+                    musicTracks["main"].src = "";
+                });
+                fadeToTrack("main", 2000);
+            }
+
+            console.log("[music_manager.js] Music system initialized with", validTracks, "valid tracks.");
+        }
+    </script>
+</body>
+
+</html>

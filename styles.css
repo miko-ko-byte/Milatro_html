@@ -306,8 +306,8 @@ body {
 }
 
 .card {
-    width: 80px;
-    height: 110px;
+    width: 120px;
+    height: 165px;
     background: white;
     border-radius: 8px;
     display: flex;
@@ -357,8 +357,8 @@ body {
 
 .flying-card {
     position: absolute;
-    width: 80px;
-    height: 110px;
+    width: 120px;
+    height: 165px;
     background: #1a4a8a;
     border: 2px solid #2a5a9a;
     border-radius: 8px;
@@ -380,7 +380,7 @@ body {
 }
 
 .card-rank {
-    font-size: 14px;
+    font-size: 25px;
     font-weight: bold;
     align-self: flex-start;
 }
@@ -413,6 +413,16 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
+}
+#play-btn{
+        height: 90px;
+}
+#discard-btn{
+        height: 90px;
+}
+.controls-down{
+    transform: translateY(400px);
+    transition: transform 0.5s ease-in-out;
 }
 
 .btn:disabled {
@@ -990,6 +1000,7 @@ button {
 
 /* Botón azul */
 .btn-play {
+    width: 180px;
     padding: 15px 30px;
     border: none;
     border-radius: 10px;
@@ -1010,6 +1021,7 @@ button {
 
 /* Botón verde */
 .btn-collection {
+    width: 180px;
     padding: 15px 30px;
     border: none;
     border-radius: 10px;
@@ -1040,8 +1052,8 @@ button {
 }
 
 .card {
-    width: 80px;
-    height: 110px;
+    width: 120px;
+    height: 165px;
     background: white;
     border-radius: 8px;
     display: flex;
@@ -1069,19 +1081,19 @@ button {
 }
 
 .card-rank {
-    font-size: 14px;
+    font-size: 25px;
     font-weight: bold;
     align-self: flex-start;
 }
 
 .card-suit {
-    font-size: 24px;
+    font-size: 64px;
     align-self: center;
     margin-top: -10px;
 }
 
 .card-rank-bottom {
-    font-size: 14px;
+    font-size: 25px;
     font-weight: bold;
     align-self: flex-end;
     transform: rotate(180deg);
@@ -1116,8 +1128,8 @@ button {
 
 .flying-card {
     position: absolute;
-    width: 80px;
-    height: 110px;
+    width: 120px;
+    height: 165px;
     background: #1a4a8a;
     border: 2px solid #2a5a9a;
     border-radius: 8px;
@@ -1127,9 +1139,9 @@ button {
 
 .joker-card {
     border: 3px solid #fff;
-    width: 80px;
-    height: 110px;
-    background-size: 80px;
+    width: 120px;
+    height: 165px;
+    background-size: 120px;
     border-radius: 8px;
 }
 
@@ -1150,8 +1162,8 @@ button {
 }
 
 .joker-card {
-    width: 80px;
-    height: 110px;
+    width: 120px;
+    height: 165px;
     background-size: cover;
     /* Ajusta la imagen para cubrir el div */
     background-position: center;
@@ -1924,6 +1936,20 @@ button {
     transform: translateY(0);
 }
 
+@keyframes shake-joker-effect {
+    0% { transform: rotate(-2deg) scale(1.05);}
+    10% { transform: rotate(2deg) scale(1.08);}
+    20% { transform: rotate(-3deg) scale(1.1);}
+    30% { transform: rotate(3deg) scale(1.08);}
+    40% { transform: rotate(-2deg) scale(1.05);}
+    50% { transform: rotate(2deg) scale(1);}
+    60% { transform: rotate(-1deg) scale(1.03);}
+    70% { transform: rotate(1deg) scale(1.05);}
+    80% { transform: rotate(-1deg) scale(1.03);}
+    90% { transform: rotate(1deg) scale(1);}
+    100% { transform: rotate(0deg) scale(1);}
+}
+
 .joker-effect-animation {
     display: inline-block;
     padding: 10px 24px;
@@ -1933,8 +1959,8 @@ button {
     color: #fff;
     background: #222;
     /* fallback */
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     opacity: 0;
     transition: all 1s ease-out;
     z-index: 1001;
@@ -1943,6 +1969,11 @@ button {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    animation: shake-joker-effect 0.7s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.joker-card-active {
+    animation: shake-joker-effect 1s cubic-bezier(.36,.07,.19,.97) both;
 }
 
 .joker-points-animation {
@@ -1964,11 +1995,12 @@ button {
     position: absolute;
     font-size: 18px;
     font-weight: bold;
-    color: #f39c12; /* Orange for messages */
+    color: #f39c12;
+    /* Orange for messages */
     opacity: 0;
     transition: all 1s ease-out;
     z-index: 1100;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .recovery-menu {
@@ -1976,6 +2008,34 @@ button {
     top: 0;
     left: 0;
     width: 100%;
+
+#deck-modal .modal-content {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #4ecdc4;
+    width: 80%;
+    max-width: 900px;
+}
+
+#deck-cards-container {
+    display: flex;
+    flex-direction: column; /* Suits will be in a column */
+    gap: 20px; /* Space between suit rows */
+    align-items: center;
+    margin-top: 20px;
+}
+
+.suit-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+#deck-value {
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -2089,8 +2149,8 @@ button {
 
 .collection-item-card {
     border: 3px solid white;
-    width: 80px;
-    height: 110px;
+    width: 120px;
+    height: 165px;
     background-size: cover;
     background-position: center;
     border-radius: 8px;
@@ -2499,13 +2559,358 @@ button {
 .card-score-animation {
     font-size: 2em;
     font-weight: bold;
-    color: #4ecdc4;
-    text-shadow: 0 0 10px rgba(78, 205, 196, 0.8);
-    z-index: 500;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(188, 212, 255, 0.8);
+    z-index: 100;
     pointer-events: none;
     white-space: nowrap;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgb(52, 123, 255);
     padding: 5px 10px;
     border-radius: 5px;
+}
+
+.settings-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.settings-menu-container {
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.settings-nav-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #444;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.settings-nav-button.active,
+.settings-nav-button:hover {
+    background: linear-gradient(45deg, #6b48ff, #00ddeb);
+    transform: translateY(-2px);
+}
+
+.settings-option {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.settings-option label {
+    font-size: 16px;
+    color: #fff;
+}
+
+.settings-option input[type="range"] {
+    width: 200px;
+}
+
+.settings-option input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+.settings-option select {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    background: #333;
+    color: #fff;
     border: 1px solid #4ecdc4;
+}
+
+.btn-reset {
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #dc3545, #c82333);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btn-reset:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.6);
+}
+
+.btn-reset:active {
+    transform: translateY(0);
+}
+
+.btn-settings {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(45deg, #e9a540, #f7ad70);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+}
+
+
+.boot-menu-container {
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.boot-menu-container h2,
+.boot-menu-container h3 {
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.deck-selection {
+    margin-bottom: 30px;
+}
+
+.deck-box {
+    width: 200px;
+    height: 280px;
+    margin: 0 auto 15px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.deck-box img {
+    border-radius: 25px;
+    border:15px solid white;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.deck-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.deck-controls span {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.btn-deck-prev,
+.btn-deck-next,
+.btn-difficulty-prev,
+.btn-difficulty-next {
+    padding: 10px 20px;
+    font-size: 18px;
+    background: #444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-deck-prev:hover,
+.btn-deck-next:hover,
+.btn-difficulty-prev:hover,
+.btn-difficulty-next:hover {
+    background: linear-gradient(45deg, #6b48ff, #00ddeb);
+    transform: translateY(-2px);
+}
+
+.difficulty-selection {
+    margin-bottom: 30px;
+}
+
+.difficulty-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.difficulty-controls span {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.menu-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+
+
+.btn-play:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+}
+
+.btn-play:active {
+    transform: translateY(0);
+}
+
+.btn-back {
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #dc3545, #c82333);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btn-back:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.6);
+}
+
+.btn-back:active {
+    transform: translateY(0);
+}
+
+/* --- ANIMACIONES DE TRANSICIÓN DE MENÚ --- */
+@keyframes slideDownOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(50vh);
+        opacity: 0;
+    }
+}
+
+@keyframes slideUpIn {
+    from {
+        transform: translateY(50vh);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slide-down-out {
+    animation: slideDownOut 0.5s forwards ease-in-out;
+}
+
+.slide-up-in {
+    animation: slideUpIn 0.5s forwards ease-in-out;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.fixed {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0);
+    z-index: 1000;
+
+}
+/* --- Cash Out Menu --- */
+.cash-out-menu {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    width: 80%;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.7);
+    border-top: 2px solid #4ecdc4;
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.5s ease-in-out;
+    z-index: 200;
+}
+
+.cash-out-menu.visible {
+    transform: translateX(-50%) translateY(0);
+}
+
+.cash-out-info {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+#cash-out-btn {
+    background: linear-gradient(45deg, #ffd700, #f0c400);
+    color: #333;
+    font-weight: bold;
+}
+
+/* Animations for hand/controls */
+.hand-and-controls-down {
+    transform: translateY(400px);
+    transition: transform 0.5s ease-in-out;
+}
+
+.cash-out-menu-down {
+    transform: translateX(-50%) translateY(100%) !important;
+}
+
+.hand-lower {
+    transform: translateY(50px);
+    transition: transform 0.3s ease-in-out;
 }

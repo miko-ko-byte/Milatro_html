@@ -1,5 +1,4 @@
-
-function wrathful_joker(points, mult, hand, gameState, handInfo) {
+function wrathful_joker_effect(points, mult, hand, gameState, handInfo) {
     let multAdded = 0;
     hand.forEach(card => {
         if (card.suit === '♠') {
@@ -8,3 +7,6 @@ function wrathful_joker(points, mult, hand, gameState, handInfo) {
     });
     return { points: points, mult: mult + multAdded, message: `+${multAdded} mult!` };
 }
+
+
+

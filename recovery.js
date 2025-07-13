@@ -32,16 +32,18 @@ function continueGame() {
             Object.assign(gameState, parsedData);
             console.log('Game state loaded from recovery:', gameState);
             document.querySelector('.recovery-menu').style.display = 'none';
-
+            document.getElementsByClassName("loading-joker")[0].style.display = "block"
             const script = document.createElement('script');
-            script.src = './boot_game.js';
+            script.src = './boot.js';
             script.type = 'text/javascript';
             script.async = false;
             script.onload = () => {
                 console.log("[recovery.js] boot_game.js loaded, calling startingGame()...");
                 startingGame();
+            document.getElementsByClassName("loading-joker")[0].style.display = "none"
             };
             document.body.appendChild(script);
+
 
         } catch (e) {
             console.error('Failed to load recovery game:', e);

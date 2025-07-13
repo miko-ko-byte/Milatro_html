@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creador de Cartas Súper Personalizable</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -85,6 +86,7 @@
         }
 
         .card-rank-bottom {
+            transform: scale(1, -1);
             font-size: 60px;
             font-weight: bold;
             text-align: right;
@@ -455,6 +457,7 @@
             <!-- Botones de acción -->
             <button id="reset-btn">🔄 Resetear Todo</button>
             <button id="download-btn">📥 Descargar PNG</button>
+            <button id="download-deck-btn">📥 Descargar deck</button>
         </div>
     </div>
 
@@ -462,6 +465,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             // Referencias DOM
             const suits = { hearts: '♥', diamonds: '♦', clubs: '♣', spades: '♠' };
+            const suitColors = { hearts: '#fc2c03', diamonds: '#fc4903', clubs: '#102d52', spades: '#1167d1' };
             const cardElement = document.getElementById('card-to-download');
             const backgroundElement = document.getElementById('card-background');
 
@@ -512,7 +516,7 @@
             // Controles de rotación
             const rankTopRotation = document.getElementById('rank-top-rotation');
             const suitCenterRotation = document.getElementById('suit-center-rotation');
-            const rankBottomRotation = document.getElementById('rank-bottom-rotation');
+           // const rankBottomRotation = document.getElementById('rank-bottom-rotation');
 
             // Controles de color
             const rankColorInput = document.getElementById('rank-color');
@@ -521,6 +525,7 @@
             // Botones
             const resetBtn = document.getElementById('reset-btn');
             const downloadBtn = document.getElementById('download-btn');
+            const downloadDeckBtn = document.getElementById('download-deck-btn');
 
             // Función para actualizar valores de sliders
             function updateSliderValues() {
@@ -537,7 +542,7 @@
                 document.getElementById('text-2-rotation-value').textContent = text2Rotation.value + '°';
                 document.getElementById('rank-top-rotation-value').textContent = rankTopRotation.value + '°';
                 document.getElementById('suit-center-rotation-value').textContent = suitCenterRotation.value + '°';
-                document.getElementById('rank-bottom-rotation-value').textContent = rankBottomRotation.value + '°';
+                //document.getElementById('rank-bottom-rotation-value').textContent = rankBottomRotation.value + '°';
             }
 
             // Función para actualizar la carta
@@ -598,12 +603,14 @@
                 // Actualizar rotaciones de elementos principales
                 rankTop.style.transform = `rotate(${rankTopRotation.value}deg)`;
                 suitCenter.style.transform = `rotate(${suitCenterRotation.value}deg)`;
-                rankBottom.style.transform = `rotate(${rankBottomRotation.value}deg)`;
+                //rankBottom.style.transform = `rotate(${rankBottomRotation.value}deg)`;
 
                 // Actualizar colores personalizados
-                rankTop.style.color = rankColorInput.value;
-                rankBottom.style.color = rankColorInput.value;
-                suitCenter.style.color = suitColorInput.value;
+                rankTop.style.color = suitColors[selectedSuitName];
+                rankBottom.style.color = suitColors[selectedSuitName];
+
+                // Cambiar color del símbolo según el palo
+                suitCenter.style.color = suitColors[selectedSuitName];
 
                 updateSliderValues();
             }
@@ -662,7 +669,7 @@
                 // Resetear rotaciones
                 rankTopRotation.value = '0';
                 suitCenterRotation.value = '0';
-                rankBottomRotation.value = '0';
+               // rankBottomRotation.value = '0';
 
                 // Resetear colores
                 rankColorInput.value = '#2c3e50';
@@ -689,6 +696,63 @@
                 } else {
                     alert('Error: No se puede descargar la imagen.');
                 }
+            }
+
+            function downloadPack() {
+                if (typeof JSZip === 'undefined') {
+                    alert('Para descargar el mazo como ZIP, se requiere JSZip.\nAgrega este script en tu <head>:');
+                    return;
+                }
+
+                const originalRank = rankSelect.value;
+                const originalSuit = suitSelect.value;
+
+                const allRanks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+                const allSuits = ['hearts', 'diamonds', 'clubs', 'spades'];
+
+                async function downloadAllCardsZip() {
+                    const zip = new JSZip();
+
+                    for (let suit of allSuits) {
+                        suitSelect.value = suit;
+                        for (let rank of allRanks) {
+                            rankSelect.value = rank;
+                            updateCard();
+                            // Esperar actualización DOM
+                            await new Promise(r => setTimeout(r, 150));
+                            await new Promise(resolve => {
+                                html2canvas(cardElement, {
+                                    backgroundColor: null,
+                                    scale: 3,
+                                    useCORS: true
+                                }).then(canvas => {
+                                    canvas.toBlob(blob => {
+                                        zip.file(`carta_${rank}_${suit}.png`, blob);
+                                        resolve();
+                                    }, 'image/png');
+                                });
+                            });
+                        }
+                    }
+
+                    // Restaurar selección original
+                    rankSelect.value = originalRank;
+                    suitSelect.value = originalSuit;
+                    updateCard();
+
+                    // Generar y descargar el ZIP
+                    zip.generateAsync({ type: "blob" }).then(function (content) {
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(content);
+                        link.download = 'mazo_cartas.zip';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        alert('¡Descarga de mazo completa!');
+                    });
+                }
+
+                downloadAllCardsZip();
             }
 
             // Event listeners
@@ -724,6 +788,7 @@
             text2Y.addEventListener('input', updateCard);
             resetBtn.addEventListener('click', resetCard);
             downloadBtn.addEventListener('click', downloadCard);
+            downloadDeckBtn.addEventListener('click', downloadPack);
 
             // Inicialización
             updateCard();

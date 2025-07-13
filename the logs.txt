@@ -1,16 +1,79 @@
 [boot_menu.js] boot_menu.js loaded
 boot_menu.js:2 [boot_menu.js] Starting boot menu...
-boot_menu.js:915 [boot_menu.js] Initial UI setup complete. Only main boot menu visible.
-boot_menu.js:924 [boot_menu.js] Intro logo displayed. Waiting for user to enter main menu.
-share.js:8 Share API supported.
-push_notifications.js:10 Notification permission granted.
-boot_menu.js:318 [boot_menu.js] Setting background: main
-boot_menu.js:1089 [boot_menu.js] Core game event listeners attached.
-Milatro_html/:296  GET https://miko-ko-byte.github.io/Milatro_html/images/jokers/blue_deck.png 404 (Not Found)Understand this error
-Milatro_html/:314 ServiceWorker registration successful with scope:  https://miko-ko-byte.github.io/Milatro_html/
-service-worker.js:1 Uncaught (in promise) TypeError: Failed to execute 'addAll' on 'Cache': Request failed
+boot_menu.js:932 [boot_menu.js] Initial UI setup complete. Only main boot menu visible.
+boot_menu.js:941 [boot_menu.js] Intro logo displayed. Waiting for user to enter main menu.
+boot_menu.js:319 [boot_menu.js] Setting background: main
+boot_menu.js:1106 [boot_menu.js] Core game event listeners attached.
+boot_menu.js:1229 [boot_menu.js] Boot menu initialized with deck: blue and difficulty: normal
+settings.js:245 [settings.js] Updated background theme to: main
+settings.js:267 [settings.js] Initialized settings
+boot_menu.js:979 [boot_menu.js] Entered main menu from intro logo.
+music_manager.js:37 Uncaught IndexSizeError: Failed to set the 'volume' property on 'HTMLMediaElement': The volume provided (100) is outside the range [0, 1].
+    at startMusicSystem (music_manager.js:37:5)
+    at boot_menu.js:980:9
+startMusicSystem @ music_manager.js:37
+(anónimo) @ boot_menu.js:980
+setTimeout
+enterMainMenu @ boot_menu.js:975
+onclick @ (índice):111Entender este error
+boot_menu.js:979 [boot_menu.js] Entered main menu from intro logo.
+music_manager.js:37 Uncaught IndexSizeError: Failed to set the 'volume' property on 'HTMLMediaElement': The volume provided (100) is outside the range [0, 1].
+    at startMusicSystem (music_manager.js:37:5)
+    at boot_menu.js:980:9
+startMusicSystem @ music_manager.js:37
+(anónimo) @ boot_menu.js:980
+setTimeout
+enterMainMenu @ boot_menu.js:975Entender este error
+favicon.ico:1  GET http://localhost:8000/favicon.ico 404 (File not found)Entender este error
+boot_menu.js:964 main menu!
+boot_menu.js:946 [boot_menu.js] All resources finished loading (window 'load' event).
+music_manager.js:28 Uncaught IndexSizeError: Failed to set the 'volume' property on 'HTMLMediaElement': The volume provided (100) is outside the range [0, 1].
+    at music_manager.js:28:25
+(anónimo) @ music_manager.js:28
+setInterval
+(anónimo) @ music_manager.js:22
 Promise.then
-(anonymous) @ service-worker.js:16
+startMusicSystem @ music_manager.js:17
+(anónimo) @ boot_menu.js:980
+setTimeout
+enterMainMenu @ boot_menu.js:975
+onclick @ (índice):111Entender este error
+music_manager.js:28 Uncaught IndexSizeError: Failed to set the 'volume' property on 'HTMLMediaElement': The volume provided (100) is outside the range [0, 1].
+    at music_manager.js:28:25
+(anónimo) @ music_manager.js:28
+setInterval
+(anónimo) @ music_manager.js:22
 Promise.then
-(anonymous) @ service-worker.js:15Understand this error
-boot_menu.js:929 [boot_menu.js] All resources finished loading (window 'load' event).
+startMusicSystem @ music_manager.js:17
+(anónimo) @ boot_menu.js:980
+setTimeout
+enterMainMenu @ boot_menu.js:975Entender este error
+updateVolume();
+music_manager.js:74 Uncaught IndexSizeError: Failed to set the 'volume' property on 'HTMLMediaElement': The volume provided (100) is outside the range [0, 1].
+    at <anonymous>:1:1
+(anónimo) @ VM44130:1Entender este error
+settings.js:107 [settings.js] Switched to section: gameplay
+settings.js:7 [settings.js] Settings menu shown
+settings.js:107 [settings.js] Switched to section: sound
+settings.js:121 [settings.js] Master volume set to: 0.96
+settings.js:121 [settings.js] Master volume set to: 0.92
+settings.js:121 [settings.js] Master volume set to: 0.9
+settings.js:121 [settings.js] Master volume set to: 0.89
+settings.js:121 [settings.js] Master volume set to: 0.87
+settings.js:121 [settings.js] Master volume set to: 0.86
+settings.js:121 [settings.js] Master volume set to: 0.84
+settings.js:121 [settings.js] Master volume set to: 0.83
+settings.js:121 [settings.js] Master volume set to: 0.81
+settings.js:121 [settings.js] Master volume set to: 0.8
+settings.js:121 [settings.js] Master volume set to: 0.79
+settings.js:121 [settings.js] Master volume set to: 0.78
+settings.js:121 [settings.js] Master volume set to: 0.77
+settings.js:121 [settings.js] Master volume set to: 0.76
+settings.js:121 [settings.js] Master volume set to: 0.75
+settings.js:121 [settings.js] Master volume set to: 0.74
+settings.js:121 [settings.js] Master volume set to: 0.73
+settings.js:121 [settings.js] Master volume set to: 0.72
+settings.js:121 [settings.js] Master volume set to: 0.71
+settings.js:121 [settings.js] Master volume set to: 0.7
+updateVolume();
+undefined
